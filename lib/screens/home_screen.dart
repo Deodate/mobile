@@ -1,4 +1,3 @@
-
 import 'package:first_quiz/contants/colors.dart';
 import 'package:first_quiz/widgets/textfield.dart';
 import 'package:first_quiz/widgets/button.dart'; // Import the Button1 widget
@@ -20,7 +19,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: const Color(0xFF4070F4), // Set Scaffold background color
       appBar: AppBar(
         title: const Text(
-          "ASSIGNMENT",
+          "MOBILE",
           style: TextStyle(color: Colors.white), // Set text color to white
         ),
         backgroundColor: const Color(0xFF4070F4), // Set AppBar background color

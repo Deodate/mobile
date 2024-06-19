@@ -1,11 +1,10 @@
-
 import 'package:first_quiz/contants/colors.dart';
 import 'package:flutter/material.dart';
 
 class Button1 extends StatelessWidget {
   const Button1({
-    super.key, 
-    required this.label, 
+    super.key,
+    required this.label,
     this.textColor = Colors.white,
   });
 
