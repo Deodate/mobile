@@ -1,14 +1,13 @@
 import 'package:first_quiz/contants/colors.dart';
+import 'package:first_quiz/screens/widgets_data.dart';
 import 'package:first_quiz/widgets/textfield.dart';
-import 'package:first_quiz/widgets/button.dart'; // Import the Button1 widget
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
     final padding = const EdgeInsets.symmetric(horizontal: 25, vertical: 30);
     final decoration = BoxDecoration(
       color: AppColors.secondaryColor,
@@ -31,31 +30,36 @@ class HomeScreen extends StatelessWidget {
             child: Container(
               padding: padding,
               decoration: decoration,
-              child: GridView.count(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                children: buttonList,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 1.0,
+                ),
+                itemCount: buttonList.length + 1, // Add an extra item for the large button
+                itemBuilder: (context, index) {
+                  if (index == buttonList.length) {
+                    // The last item should span two columns
+                    return SizedBox(
+                      width: double.infinity, // Expand to full width
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        // child: Button1(
+                          // label: "=",
+                          // backgroundColor: Colors.black,
+                          // textColor: Colors.white,
+                        // ),
+                      ),
+                    );
+                  }
+                  return buttonList[index];
+                },
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  List<Widget> get buttonList {
-    return const [
-      Button1(label: "1"),
-      Button1(label: "2"),
-      Button1(label: "3"),
-      Button1(label: "4"),
-      Button1(label: "5"),
-      Button1(label: "6"),
-      Button1(label: "7"),
-      Button1(label: "8"),
-      Button1(label: "9"),
-      Button1(label: "0"),
-    ];
   }
 }
