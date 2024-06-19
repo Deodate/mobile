@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
     final padding = const EdgeInsets.symmetric(horizontal: 25, vertical: 30);
     final decoration = BoxDecoration(
       color: AppColors.secondaryColor,
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
     );
 
     return Scaffold(
