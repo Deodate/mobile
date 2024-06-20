@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cal_button.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
