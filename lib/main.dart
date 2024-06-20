@@ -1,5 +1,8 @@
+
+import 'package:first_quiz/provider/cal_provider.dart';
 import 'package:first_quiz/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const CalculatorApp());
@@ -10,10 +13,34 @@ class CalculatorApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => CalculatorProvider(),
+      child: MaterialApp(
+        theme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        home: const HomeScreen(),
+      ),
     );
   }
 }
+
+
+// import 'package:first_quiz/screens/home_screen.dart';
+// import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(const CalculatorApp());
+// }
+
+// class CalculatorApp extends StatelessWidget {
+//   const CalculatorApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData.dark(),
+//       debugShowCheckedModeBanner: false,
+//       home: const HomeScreen(),
+//     );
+//   }
+// }
