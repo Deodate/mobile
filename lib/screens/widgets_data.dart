@@ -7,19 +7,23 @@ import '../widgets/button.dart';
 List<Widget> buttonList = [
   const Button1(
     label: "C",
-    textColor: AppColors.secondaryColor,
+    textColor: AppColors.primaryColor,
+    backgroundColor: Colors.red, // Set background color to red
   ),
   const Button1(
     label: "/",
-    textColor: AppColors.secondaryColor,
+    textColor: AppColors.primaryColor,
+    backgroundColor: Color.fromARGB(255, 192, 178, 178), // Set background color to red
   ),
   const Button1(
     label: "X",
-    textColor: AppColors.secondaryColor,
+   textColor: AppColors.primaryColor,
+    backgroundColor: Color.fromARGB(255, 192, 178, 178), // Set background color to red
   ),
   const Button1(
     label: "AC",
-    textColor: AppColors.secondaryColor,
+  textColor: AppColors.primaryColor,
+   backgroundColor: Color.fromARGB(255, 192, 178, 178), // Set background color to red
   ),
   const Button1(
     label: "7",
@@ -32,7 +36,8 @@ List<Widget> buttonList = [
   ),
   const Button1(
     label: "+",
-    textColor: AppColors.secondaryColor,
+    textColor: AppColors.primaryColor,
+    backgroundColor: Color.fromARGB(255, 240, 164, 64), // Set background color to red
   ),
   const Button1(
     label: "4",
@@ -45,7 +50,8 @@ List<Widget> buttonList = [
   ),
   const Button1(
     label: "-",
-    textColor: AppColors.secondaryColor,
+    textColor: AppColors.primaryColor,
+    backgroundColor: Color.fromARGB(255, 240, 164, 64), // Set background color to red
   ),
   const Button1(
     label: "1",
@@ -58,6 +64,7 @@ List<Widget> buttonList = [
   ),
   const Button1(
     label: "%",
+     textColor: AppColors.secondaryColor,
   ),
   const Button1(
     label: "0",
@@ -66,13 +73,6 @@ List<Widget> buttonList = [
     label: ".",
   ),
 ];
-
-
-
-
-
-
-
 
 
 

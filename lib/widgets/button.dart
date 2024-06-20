@@ -1,15 +1,19 @@
-
 import 'package:first_quiz/contants/colors.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Button1 extends StatelessWidget {
-  const Button1(
-      {super.key, required this.label, this.textColor = Colors.white});
+  const Button1({
+    super.key,
+    required this.label,
+    this.textColor = Colors.white,
+    this.backgroundColor = AppColors.secondary2Color,
+  });
 
   final String label;
   final Color textColor;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +26,14 @@ class Button1 extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         child: CircleAvatar(
           radius: 36,
-          backgroundColor: AppColors.secondary2Color,
+          backgroundColor: backgroundColor,
           child: Text(
             label,
             style: TextStyle(
-                color: textColor, fontSize: 32, fontWeight: FontWeight.w600),
+              color: textColor,
+              fontSize: 32,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),

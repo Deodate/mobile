@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:function_tree/function_tree.dart';
 
 class CalculatorProvider extends ChangeNotifier {
-  final compController = TextEditingController();
+  final compController = TextEditingController(text: "0");
 
   setValue(String value) {
     String str = compController.text;
@@ -10,9 +10,14 @@ class CalculatorProvider extends ChangeNotifier {
     switch (value) {
       case "C":
         compController.clear();
+        compController.text = "0";
         break;
       case "AC":
-        compController.text = str.substring(0, str.length - 1);
+        if (str.length > 1) {
+          compController.text = str.substring(0, str.length - 1);
+        } else {
+          compController.text = "0";
+        }
         break;
       case "X":
         compController.text += "*";
@@ -21,7 +26,11 @@ class CalculatorProvider extends ChangeNotifier {
         compute();
         break;
       default:
-        compController.text += value;
+        if (str == "0") {
+          compController.text = value;
+        } else {
+          compController.text += value;
+        }
     }
     compController.selection = TextSelection.fromPosition(
         TextPosition(offset: compController.text.length));
@@ -29,7 +38,11 @@ class CalculatorProvider extends ChangeNotifier {
 
   compute() {
     String text = compController.text;
-    compController.text = text.interpret().toString();
+    try {
+      compController.text = text.interpret().toString();
+    } catch (e) {
+      compController.text = "Error";
+    }
   }
 
   @override

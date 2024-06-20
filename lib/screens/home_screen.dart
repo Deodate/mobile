@@ -1,5 +1,4 @@
 
-
 import 'package:first_quiz/contants/colors.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
 import 'package:first_quiz/screens/widgets_data.dart';
@@ -17,15 +16,15 @@ class HomeScreen extends StatelessWidget {
     final screenHeight = MediaQuery.sizeOf(context).height;
     const padding = EdgeInsets.symmetric(horizontal: 25, vertical: 30);
     const decoration = BoxDecoration(
-        color: AppColors.primaryColor,
+        color: Colors.blue,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)));
 
     return Consumer<CalculatorProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.secondaryColor,
         appBar: AppBar(
           title: const Text("CALCULATOR"),
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue,
         ),
         body: Column(
           children: [
