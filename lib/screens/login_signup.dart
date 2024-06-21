@@ -48,7 +48,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         ),
                         children: [
                           TextSpan(
-                            text: " AUCA",
+                            text: " AUCA, ",
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
