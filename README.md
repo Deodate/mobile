@@ -8,7 +8,8 @@ This project is a starting point for a Flutter application.
 
 [1]. COMPLETED CALCULATOR
 
-![image](https://github.com/Deodate/mobile/assets/13644752/36f0bf92-34c0-440f-9e1b-7cb3c4b35933)
+![image](https://github.com/Deodate/mobile/assets/13644752/95bf2ea8-044f-4920-a8e6-197123fda5fa)
+
 
 [2]. LOGIN UI
 
