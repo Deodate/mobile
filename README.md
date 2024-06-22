@@ -6,6 +6,11 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
+[0]. DASHBOARD UI
+
+![image](https://github.com/Deodate/mobile/assets/13644752/278d28a5-296f-4e49-8292-d0bc234c41f7)
+
+
 [1]. COMPLETED CALCULATOR
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/95bf2ea8-044f-4920-a8e6-197123fda5fa)
