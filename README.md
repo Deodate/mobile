@@ -14,4 +14,8 @@ This project is a starting point for a Flutter application.
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/392a8c77-42b2-4dee-925b-c782c00c7297)
 
+[3] SIGNUP UI
+![image](https://github.com/Deodate/mobile/assets/13644752/12253ce8-36ac-42ae-82bf-1ff0bc228532)
+
+
 
