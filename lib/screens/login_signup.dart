@@ -401,7 +401,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             },
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.account_circle),
-              hintText: "Student ID e.g: 24527",
+              hintText: "* Student ID e.g: 24527",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
