@@ -14,6 +14,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
    TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController studentIDController = TextEditingController();
+  TextEditingController studentIDsController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
 
@@ -22,6 +23,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
    bool firstNameError = false;
   bool lastNameError = false;
   bool studentIDError = false;
+  bool studentIDErrors = false;
 
 
   @override
@@ -30,6 +32,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     firstNameController.dispose();
     lastNameController.dispose();
     studentIDController.dispose();
+     studentIDsController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -42,7 +45,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         children: [
           // Back button and background image
           Positioned(
-            top: 0,
+            top: 5,
             right: 0,
             left: 0,
             child: Container(
@@ -79,8 +82,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               ? "Signup to Continue.."
                               : "Login to Continue..",
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: Color.fromARGB(255, 252, 251, 251),
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 255, 253, 253),
                           ),
                         ),
                       ],
@@ -90,7 +93,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       text: TextSpan(
                         text: "Welcome to",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 28,
                           letterSpacing: 2,
                           color: Colors.yellow[700],
                         ),
@@ -113,9 +116,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           ),
           // Login/Signup container
           Positioned(
-            top: 170,
+            top: 250,
             child: Container(
-              height: 400,
+              height: 450,
               width: MediaQuery.of(context).size.width - 40,
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
@@ -229,9 +232,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               prefixIcon: Icon(Icons.account_circle),
               hintText: "Student ID e.g: 24527",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(0),
               ),
-              errorText: studentIDError ? "Must be 5 numeric digits" : null,
+              errorText: studentIDErrors ? "Must be 5 numeric digits" : null,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 1.5),
@@ -449,7 +452,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
             ),
             child: Text(
-              "REGISTER",
+              "REGISTERS",
               style: TextStyle(color: Colors.white),
             ),
           ),

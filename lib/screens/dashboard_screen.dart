@@ -51,7 +51,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
           Container(
-            height: 37, // Height of the footer
+            height: 70, // Height of the footer
             color: Colors.blue, // Color of the footer
             child: Center(
               child: Text(
