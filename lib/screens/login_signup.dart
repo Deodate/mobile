@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dashboard_screen.dart'; // Import DashboardScreen assuming it's in the same directory or namespace
 
 class AppColors {
   static const Color primaryColor = Color(0xFF3b5999);
@@ -11,20 +12,18 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
-   TextEditingController firstNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController studentIDController = TextEditingController();
   TextEditingController studentIDsController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   bool isSignupScreen = true;
   bool isRememberMe = false;
-   bool firstNameError = false;
+  bool firstNameError = false;
   bool lastNameError = false;
   bool studentIDError = false;
   bool studentIDErrors = false;
-
 
   @override
   void dispose() {
@@ -66,13 +65,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            var dashboard;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      dashboard.DashboardScreen()),
-                            );
+                            Navigator.pop(context); // Navigate back on tap
                           },
                           child: Icon(Icons.arrow_back, color: Colors.white),
                         ),
@@ -88,7 +81,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
                     RichText(
                       text: TextSpan(
                         text: "Welcome to",
@@ -116,9 +109,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           ),
           // Login/Signup container
           Positioned(
-            top: 250,
+            top: 150,
             child: Container(
-              height: 450,
+              height: 395,
               width: MediaQuery.of(context).size.width - 40,
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
@@ -135,8 +128,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                      height:
-                          30), // Added some top padding for better alignment
+                    height: 30,
+                  ), // Added some top padding for better alignment
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -224,8 +217,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             controller: studentIDsController,
             onChanged: (value) {
               setState(() {
-                studentIDError =
-                    value.length != 5 || int.tryParse(value) == null;
+                studentIDError = value.length != 5 || int.tryParse(value) == null;
               });
             },
             decoration: InputDecoration(
@@ -243,8 +235,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 2.0),
               ),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             ),
           ),
           SizedBox(height: 20),
@@ -331,7 +322,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 
- Widget buildSignupSection() {
+  Widget buildSignupSection() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Column(
@@ -358,8 +349,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.blue, width: 2.0),
               ),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             ),
           ),
           SizedBox(height: 10),
@@ -379,7 +369,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               errorText: lastNameError ? "Cannot contain numbers" : null,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                             borderSide: BorderSide(color: Colors.blue, width: 1.5),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -452,7 +442,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
             ),
             child: Text(
-              "REGISTERS",
+              "REGISTER",
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -461,3 +451,4 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 }
+
