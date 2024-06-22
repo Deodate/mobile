@@ -32,7 +32,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     firstNameController.dispose();
     lastNameController.dispose();
     studentIDController.dispose();
-     studentIDsController.dispose();
+    studentIDsController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -221,7 +221,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       child: Column(
         children: [
           TextField(
-            controller: studentIDController,
+            controller: studentIDsController,
             onChanged: (value) {
               setState(() {
                 studentIDError =
