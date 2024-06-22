@@ -63,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             'Mobile Class',
                             style: TextStyle(
                               color: Color.fromARGB(255, 223, 172, 4),
-                              fontSize: 30,
+                              fontSize: 38,
                               fontFamily: 'Times New Roman',
                             ),
                           ),
@@ -72,12 +72,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             radius: 75, // Half of the height and width you want
                             backgroundImage: AssetImage("image/Flutter-App-development.jpg"),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 14),
                           Text(
                             'This is Assignment #Calculator & #SignUpLogin',
                             style: TextStyle(
                               color: Color.fromARGB(255, 4, 4, 4),
-                              fontSize: 14,
+                              fontSize: 17,
                               fontFamily: 'Times New Roman',
                             ),
                           ),
@@ -87,7 +87,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
                 Container(
-                  height: 40,
+                  height: 60,
                   color: Colors.blue,
                   child: Center(
                     child: Text(

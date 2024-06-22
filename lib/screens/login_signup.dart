@@ -81,7 +81,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 80),
                     RichText(
                       text: TextSpan(
                         text: "Welcome to",
@@ -97,21 +97,32 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.yellow[700],
+                              
                             ),
                           ),
                         ],
                       ),
                     ),
+                    
                   ],
                 ),
               ),
             ),
+            
           ),
+          
+           // Spacer between header and login/signup container
+          const Positioned(
+            top: 200, // Adjust top position as needed
+            child: SizedBox(height: 40), // Add your desired height here
+          ),
+
           // Login/Signup container
+    
           Positioned(
-            top: 150,
+            top: 240,
             child: Container(
-              height: 395,
+              height: 450,
               width: MediaQuery.of(context).size.width - 40,
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
