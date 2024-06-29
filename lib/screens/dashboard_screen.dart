@@ -87,7 +87,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
                 Container(
-                  height: 60,
+                  height: 65,
                   color: Colors.blue,
                   child: Center(
                     child: Text(
