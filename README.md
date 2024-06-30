@@ -14,6 +14,10 @@ This is claass assignment 1, 2, 3 #Mobile Application.
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/159328d4-75fa-4274-8869-f255902f965c)
 
+[4]. Broadcast Receivers WIFI complete
+![image](https://github.com/Deodate/mobile/assets/13644752/3c5a7790-2beb-4934-a24f-c36880706f2e)
+
+
 
 
 
