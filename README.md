@@ -16,7 +16,8 @@ This is claass assignment 1, 2, 3 #Mobile Application.
 
 [4]. Broadcast Receivers Toast WIFI complete
 
-![image](https://github.com/Deodate/mobile/assets/13644752/9c30a61c-e873-47f4-b405-cf9bdc27b40c)
+![image](https://github.com/Deodate/mobile/assets/13644752/3d088c85-6b05-4ba0-ba12-2f13dad07f48)
+
 
 
 
