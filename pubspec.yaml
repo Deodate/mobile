@@ -16,7 +16,10 @@ dependencies:
   connectivity_plus: ^6.0.3
   battery_plus: ^4.0.3
   fluttertoast: ^8.2.6
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.0.15
+
+  http: ^0.13.4
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

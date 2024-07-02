@@ -1,3 +1,4 @@
+
 import 'package:first_quiz/provider/BatteryService.dart';
 import 'package:first_quiz/provider/ConnectivityService.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
@@ -21,6 +22,8 @@ class CalculatorApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CalculatorProvider()),
+        // ChangeNotifierProvider(create: (context) => ConnectivityService()),
+        // ChangeNotifierProvider(create: (context) => BatteryService()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -37,8 +40,7 @@ class CalculatorApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home:
-            const DashboardScreen(), // Set the DashboardScreen as the home screen
+        home: const DashboardScreen(), // Set the DashboardScreen as the home screen
         routes: getAppRoutes(),
       ),
     );

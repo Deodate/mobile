@@ -1,0 +1,28 @@
+{
+  "cors": true,
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Deodate",
+      "lastName": "Mugenzi",
+      "studentID": "24527",
+      "username": "deodate",
+      "password": "test"
+    },
+    {
+      "id": "2",
+      "firstName": "Mugenzi",
+      "lastName": "Deodate",
+      "studentID": "12345",
+      "username": "mugenzi",
+      "password": "test2"
+    },
+    {
+      "id": "d452",
+      "firstName": "John",
+      "lastName": "Doe",
+      "studentID": "12345",
+      "password": "securepassword"
+    }
+  ]
+}

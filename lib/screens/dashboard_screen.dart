@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:first_quiz/provider/BatteryService.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
