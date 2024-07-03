@@ -26,6 +26,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final isDarkTheme = themeNotifier.isDarkTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -45,9 +48,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
         actions: [
           IconButton(
-            icon: Icon(Icons.brightness_6),
+            icon: Icon(isDarkTheme ? Icons.brightness_7 : Icons.brightness_3),
             onPressed: () {
-              Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+              themeNotifier.toggleTheme();
             },
           ),
         ],
@@ -64,7 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    color: const Color(0xFF317AF7),
+                    color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +75,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Text(
                             'Mobile Class',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 223, 172, 4),
+                              color: isDarkTheme
+                                  ? Colors.white
+                                  : Color.fromARGB(255, 223, 172, 4),
                               fontSize: 38,
                               fontFamily: 'Times New Roman',
                             ),
@@ -87,7 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Text(
                             'This is Assignment #Calculator & #SignUpLogin',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 4, 4, 4),
+                              color: isDarkTheme ? Colors.white : Color.fromARGB(255, 4, 4, 4),
                               fontSize: 17,
                               fontFamily: 'Times New Roman',
                             ),
@@ -99,12 +104,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 Container(
                   height: 65,
-                  color: Colors.blue,
+                  color: isDarkTheme ? Colors.grey[800] : Colors.blue,
                   child: Center(
                     child: Text(
                       'Deodate Mugenzi',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: isDarkTheme ? Colors.white : Colors.black,
                         fontSize: 15,
                         fontFamily: 'Times New Roman',
                       ),
@@ -126,18 +131,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 left: 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.50,
-                  height:
-                      MediaQuery.of(context).size.height * 0.84, // 84% of screen height
-                  color: Color.fromARGB(255, 19, 58, 103), // Setting drawer background color to blue
+                  height: MediaQuery.of(context).size.height * 0.84, // 84% of screen height
+                  color: isDarkTheme ? Colors.grey[900] : Color.fromARGB(255, 19, 58, 103), // Setting drawer background color
                   child: Column(
                     children: [
                       Container(
                         height: 65,
                         width: double.infinity, // Taking full width of drawer
-                        color: Colors.blue,
+                        color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                         child: DrawerHeader(
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                           ),
                           child: Text(
                             'Primary',
@@ -157,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: Icons.keyboard,
                               text: 'Calculator',
                               fontSize: 20,
-                              textColor: Colors.white, // Setting text color to white
+                              textColor: Colors.white,
                               onTap: () {
                                 Navigator.pushNamed(context, '/home');
                                 _closeDrawer();
@@ -167,8 +171,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: Icons.email,
                               text: 'Login',
                               fontSize: 20,
-                              textColor: Colors.white, // Setting text color to white
-                              iconColor: Colors.red, // Changing email icon color to red
+                              textColor: Colors.white,
+                              iconColor: Colors.red,
                               onTap: () {
                                 Navigator.pushNamed(context, '/login_signup');
                                 _closeDrawer();
@@ -178,8 +182,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: Icons.document_scanner,
                               text: 'Register',
                               fontSize: 20,
-                              textColor: Colors.white, // Setting text color to white
-                              iconColor: Colors.yellow, // Changing icon color to yellow
+                              textColor: Colors.white,
+                              iconColor: Colors.yellow,
                               onTap: () {
                                 Navigator.pushNamed(context, '/login_signup');
                                 _closeDrawer();
@@ -202,20 +206,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     required IconData icon,
     required String text,
     required VoidCallback onTap,
-    Color iconColor = Colors.black, // Default icon color is black
-    Color textColor = Colors.black, // Default text color is black
-    double fontSize = 13, // Default font size
+    Color iconColor = Colors.black,
+    Color textColor = Colors.black,
+    double fontSize = 13,
   }) {
     return Material(
       color: Colors.transparent,
       child: ListTile(
-        leading: Icon(icon, size: 20, color: iconColor), // Applying iconColor to icon
+        leading: Icon(icon, size: 20, color: iconColor),
         title: Text(
           text,
           style: TextStyle(
             fontFamily: 'Times New Roman',
             fontSize: fontSize,
-            color: textColor, // Applying textColor to text
+            color: textColor,
           ),
         ),
         hoverColor: Colors.blue.withOpacity(0.5),
