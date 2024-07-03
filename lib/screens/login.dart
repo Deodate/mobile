@@ -1,15 +1,17 @@
+import 'package:first_quiz/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _LoginState createState() => _LoginState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _LoginState extends State<Login> {
   bool _isDrawerOpen = false;
 
   void _toggleDrawer() {
@@ -72,31 +74,67 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Mobile Class',
-                            style: TextStyle(
-                              color: isDarkTheme
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 223, 172, 4),
-                              fontSize: 38,
-                              fontFamily: 'Times New Roman',
+                          _buildTextField('Student ID'),
+                          SizedBox(height: 20),
+                          _buildTextField('Password', isPassword: true),
+                          SizedBox(height: 20),
+                          SizedBox(
+                            width: 150, // Adjust width as needed
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    return isDarkTheme
+                                        ? Colors.blue
+                                        : Colors.black;
+                                  },
+                                ),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(
+                                        color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                // Implement your login logic here
+                                // For example, authenticate user
+                                print('Login pressed');
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          CircleAvatar(
-                            radius: 75,
-                            backgroundImage:
-                                AssetImage("image/Flutter-App-development.jpg"),
-                          ),
-                          const SizedBox(height: 14),
-                          Text(
-                            'This is Assignment #Calculator & #SignUpLogin',
-                            style: TextStyle(
-                              color: isDarkTheme
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 4, 4, 4),
-                              fontSize: 17,
-                              fontFamily: 'Times New Roman',
+                          SizedBox(height: 10),
+                          GestureDetector(
+                            onTap: () {
+                              // Navigate to registration page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Signup(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'If you have no account click here to register?',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ),
                         ],
@@ -132,22 +170,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 top: 2,
                 left: 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.50,
+                  width: MediaQuery.of(context).size.width *
+                      0.50, // Adjust as needed
                   height: MediaQuery.of(context).size.height *
-                      0.84, // 84% of screen height
+                      0.84, // Adjust as needed
                   color: isDarkTheme
                       ? Colors.grey[900]
-                      : Color.fromARGB(
-                          255, 19, 58, 103), // Setting drawer background color
+                      : Color.fromARGB(255, 19, 58, 103),
                   child: Column(
                     children: [
                       Container(
                         height: 65,
-                        width: double.infinity, // Taking full width of drawer
+                        width: double.infinity,
                         color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                         child: DrawerHeader(
                           decoration: BoxDecoration(
-                            color: isDarkTheme ? Colors.grey[850] : Colors.blue,
+                            color: isDarkTheme
+                                ? Colors.grey[850]
+                                : Colors.blue,
                           ),
                           child: Text(
                             'Primary',
@@ -203,6 +243,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String labelText, {bool isPassword = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: TextField(
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(),
         ),
       ),
     );

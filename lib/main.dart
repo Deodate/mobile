@@ -3,10 +3,11 @@ import 'package:first_quiz/provider/ConnectivityService.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
 import 'package:first_quiz/screens/dashboard_screen.dart';
 import 'package:first_quiz/screens/home_screen.dart';
-import 'package:first_quiz/screens/login_signup.dart';
+import 'package:first_quiz/screens/login.dart';
+import 'package:first_quiz/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'theme_notifier.dart'; // import the ThemeNotifier
 
 void main() {
@@ -41,7 +42,8 @@ class CalculatorApp extends StatelessWidget {
   Map<String, WidgetBuilder> getAppRoutes() {
     return {
       '/home': (context) => const HomeScreen(),
-      '/login_signup': (context) => LoginSignupScreen(),
+      '/signup': (context) => const Signup(),
+        '/login': (context) => const Login(),
     };
   }
 }
