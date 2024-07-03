@@ -1,4 +1,3 @@
-
 import 'package:first_quiz/contants/colors.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
 import 'package:first_quiz/screens/widgets_data.dart';
@@ -6,6 +5,7 @@ import 'package:first_quiz/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cal_button.dart';
+import 'package:first_quiz/theme_notifier.dart'; // Import ThemeNotifier
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,12 +18,27 @@ class HomeScreen extends StatelessWidget {
         color: Colors.blue,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)));
 
-    return Consumer<CalculatorProvider>(builder: (context, provider, _) {
+    return Consumer2<CalculatorProvider, ThemeNotifier>(
+        builder: (context, provider, themeNotifier, _) {
       return Scaffold(
-        backgroundColor: AppColors.secondaryColor,
+        backgroundColor: themeNotifier.isDarkTheme
+            ? Colors.black
+            : AppColors.secondaryColor,
         appBar: AppBar(
           title: const Text("CALCULATOR"),
-          backgroundColor: Colors.blue,
+          backgroundColor: themeNotifier.isDarkTheme
+              ? Colors.black
+              : Colors.blue,
+          actions: [
+            IconButton(
+              icon: Icon(themeNotifier.isDarkTheme
+                  ? Icons.brightness_7
+                  : Icons.brightness_3),
+              onPressed: () {
+                themeNotifier.toggleTheme();
+              },
+            ),
+          ],
         ),
         body: Column(
           children: [
@@ -35,7 +50,14 @@ class HomeScreen extends StatelessWidget {
               height: screenHeight * 0.6,
               width: double.infinity,
               padding: padding,
-              decoration: decoration,
+              decoration: BoxDecoration(
+                color: themeNotifier.isDarkTheme
+                    ? Colors.grey[800]
+                    : Colors.blue,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(30),
+                ),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -45,13 +67,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:
-                        List.generate(4, (index) => buttonList[index + 4]),
+                    children: List.generate(4, (index) => buttonList[index + 4]),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:
-                        List.generate(4, (index) => buttonList[index + 8]),
+                    children: List.generate(4, (index) => buttonList[index + 8]),
                   ),
                   Row(
                     children: [
@@ -89,72 +109,3 @@ class HomeScreen extends StatelessWidget {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-// import 'package:first_quiz/contants/colors.dart';
-// import 'package:first_quiz/screens/widgets_data.dart';
-// import 'package:first_quiz/widgets/textfield.dart';
-// import 'package:flutter/material.dart';
-
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({Key? key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final padding = const EdgeInsets.symmetric(horizontal: 25, vertical: 30);
-//     final decoration = BoxDecoration(
-//       color: AppColors.secondaryColor,
-//       borderRadius: const BorderRadius.vertical(top: Radius.circular(23)),
-//     );
-
-//     return Scaffold(
-//       backgroundColor: const Color(0xFF4070F4), 
-//       appBar: AppBar(
-//         title: const Text(
-//           "CALCULATOR",
-//           style: TextStyle(color: Colors.white), 
-//         ),
-//         backgroundColor: const Color(0xFF4070F4), 
-//       body: Column(
-//         children: [
-//           const CustomTextField(),
-//           Expanded(
-//             child: Container(
-//               padding: padding,
-//               decoration: decoration,
-//               child: GridView.builder(
-//                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                   crossAxisCount: 4,
-//                   crossAxisSpacing: 10,
-//                   mainAxisSpacing: 10,
-//                   childAspectRatio: 1.0,
-//                 ),
-//                 itemCount: buttonList.length + 1, 
-//                 itemBuilder: (context, index) {
-//                   if (index == buttonList.length) {
-                  
-//                     return SizedBox(
-//                       width: double.infinity, 
-//                       child: Padding(
-//                         padding: const EdgeInsets.symmetric(vertical: 10),
-                       
-//                       ),
-//                     );
-//                   }
-//                   return buttonList[index];
-//                 },
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

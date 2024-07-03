@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:first_quiz/provider/BatteryService.dart';
+import 'package:provider/provider.dart';
+import 'package:first_quiz/theme_notifier.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -42,6 +43,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: Icon(Icons.menu, size: 20),
                 onPressed: _toggleDrawer,
               ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.brightness_6),
+            onPressed: () {
+              Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+            },
+          ),
+        ],
       ),
       body: GestureDetector(
         onTap: () {
@@ -70,8 +79,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           const SizedBox(height: 10),
                           CircleAvatar(
-                            radius: 75, // Half of the height and width you want
-                            backgroundImage: AssetImage("image/Flutter-App-development.jpg"),
+                            radius: 75,
+                            backgroundImage: AssetImage(
+                                "image/Flutter-App-development.jpg"),
                           ),
                           const SizedBox(height: 14),
                           Text(
@@ -116,7 +126,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 left: 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.50,
-                  height: MediaQuery.of(context).size.height * 0.84, // 84% of screen height
+                  height:
+                      MediaQuery.of(context).size.height * 0.84, // 84% of screen height
                   color: Color.fromARGB(255, 19, 58, 103), // Setting drawer background color to blue
                   child: Column(
                     children: [
@@ -155,7 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             _buildListTile(
                               icon: Icons.email,
                               text: 'Login',
-                               fontSize: 20,
+                              fontSize: 20,
                               textColor: Colors.white, // Setting text color to white
                               iconColor: Colors.red, // Changing email icon color to red
                               onTap: () {
@@ -163,10 +174,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 _closeDrawer();
                               },
                             ),
-                             _buildListTile(
+                            _buildListTile(
                               icon: Icons.document_scanner,
                               text: 'Register',
-                               fontSize: 20,
+                              fontSize: 20,
                               textColor: Colors.white, // Setting text color to white
                               iconColor: Colors.yellow, // Changing icon color to yellow
                               onTap: () {
