@@ -25,6 +25,9 @@ class _LoginState extends State<Login> {
     });
   }
 
+  final FocusNode _studentIdFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -32,12 +35,6 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          '#24527',
-          style: TextStyle(
-            fontFamily: 'Times New Roman',
-          ),
-        ),
         leading: _isDrawerOpen
             ? IconButton(
                 icon: Icon(Icons.close, size: 20),
@@ -69,79 +66,74 @@ class _LoginState extends State<Login> {
                 Expanded(
                   child: Container(
                     color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildTextField('Student ID'),
-                          SizedBox(height: 20),
-                          _buildTextField('Password', isPassword: true),
-                          SizedBox(height: 20),
-                          SizedBox(
-                            width: 150, // Adjust width as needed
-                            child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                      return isDarkTheme
-                                          ? Colors.blue
-                                          : Colors.black;
+                    child: Column(
+                      children: [
+                        SizedBox(height: 60), // Add some space at the top
+                       
+                        SizedBox(width: 8), // Adjust spacing as needed
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            fontFamily: 'Times New Roman',
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 20), // Add some space below the title
+                        Expanded(
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildLabeledTextField('Student ID', 'Enter your student ID', icon: Icons.person, focusNode: _studentIdFocusNode, isDarkTheme: isDarkTheme),
+                                SizedBox(height: 20),
+                                _buildLabeledTextField('Password', 'Enter your password', isPassword: true, icon: Icons.lock, focusNode: _passwordFocusNode, isDarkTheme: isDarkTheme),
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  width: 150, // Adjust width as needed
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Implement your login logic here
+                                      print('Login pressed');
                                     },
-                                  ),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(
-                                          color: Colors.transparent),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: isDarkTheme ? Colors.white : Colors.black,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.zero, // Make the button rectangular
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'LOGIN',
+                                      style: TextStyle(
+                                        color: isDarkTheme ? Colors.black : Colors.white, // Set text color based on theme
+                                      ),
                                     ),
                                   ),
                                 ),
-                                onPressed: () {
-                                  // Implement your login logic here
-                                  // For example, authenticate user
-                                  print('Login pressed');
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                SizedBox(height: 80),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to registration page
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const Signup(),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
-                                    'Login',
+                                    'If you have no account click here to register?',
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
+                                      color: isDarkTheme ? Colors.blue : Colors.black,
+                                      fontSize: 12,
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          GestureDetector(
-                            onTap: () {
-                              // Navigate to registration page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Signup(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              'If you have no account click here to register?',
-                              style: TextStyle(
-                                color: isDarkTheme ? Colors.red : Colors.black,
-                                fontSize: 14,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.red,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -170,17 +162,14 @@ class _LoginState extends State<Login> {
               ),
             if (_isDrawerOpen)
               Positioned(
-                top: 2,
+                top: 0,
                 left: 0,
+                bottom: 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width *
-                      0.50, // Adjust as needed
-                  height: MediaQuery.of(context).size.height *
-                      0.84, // Adjust as needed
-                  color: isDarkTheme
-                      ? Colors.grey[900]
-                      : Color.fromARGB(255, 19, 58, 103),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  color: isDarkTheme ? Colors.grey[900] : Color.fromARGB(255, 19, 58, 103),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         height: 65,
@@ -188,9 +177,7 @@ class _LoginState extends State<Login> {
                         color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                         child: DrawerHeader(
                           decoration: BoxDecoration(
-                            color: isDarkTheme
-                                ? Colors.grey[850]
-                                : Colors.blue,
+                            color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                           ),
                           child: Text(
                             'Primary',
@@ -202,44 +189,29 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: [
-                            _buildListTile(
-                              icon: Icons.keyboard,
-                              text: 'Calculator',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/home');
-                                _closeDrawer();
-                              },
-                            ),
-                            _buildListTile(
-                              icon: Icons.email,
-                              text: 'Login',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              iconColor: Colors.red,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/login');
-                                _closeDrawer();
-                              },
-                            ),
-                            _buildListTile(
-                              icon: Icons.document_scanner,
-                              text: 'Register',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              iconColor: Colors.yellow,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/signup');
-                                _closeDrawer();
-                              },
-                            ),
-                          ],
-                        ),
+                      _buildListTile(
+                        icon: Icons.keyboard,
+                        text: 'Calculator',
+                        onTap: () {
+                          Navigator.pushNamed(context, '/home');
+                          _closeDrawer();
+                        },
+                      ),
+                      _buildListTile(
+                        icon: Icons.email,
+                        text: 'Login',
+                        onTap: () {
+                          Navigator.pushNamed(context, '/login');
+                          _closeDrawer();
+                        },
+                      ),
+                      _buildListTile(
+                        icon: Icons.document_scanner,
+                        text: 'Register',
+                        onTap: () {
+                          Navigator.pushNamed(context, '/signup');
+                          _closeDrawer();
+                        },
                       ),
                     ],
                   ),
@@ -251,42 +223,47 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _buildTextField(String labelText, {bool isPassword = false}) {
+  Widget _buildLabeledTextField(String labelText, String hintText, {bool isPassword = false, IconData? icon, required FocusNode focusNode, required bool isDarkTheme}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextField(
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          labelText: labelText,
-          border: OutlineInputBorder(),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(labelText),
+          SizedBox(height: 5),
+          Theme(
+            data: Theme.of(context).copyWith(
+              inputDecorationTheme: InputDecorationTheme(
+                hintStyle: TextStyle(
+                  color: isDarkTheme ? Colors.blue : Colors.grey, // Change hint text color based on theme
+                ),
+              ),
+            ),
+            child: TextField(
+              focusNode: focusNode,
+              obscureText: isPassword,
+              decoration: InputDecoration(
+                hintText: hintText,
+                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: isDarkTheme ? Colors.grey[800] : Colors.white,
+                prefixIcon: icon != null ? Icon(icon) : null,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildListTile({
-    required IconData icon,
-    required String text,
-    required VoidCallback onTap,
-    Color iconColor = Colors.black,
-    Color textColor = Colors.black,
-    double fontSize = 13,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        leading: Icon(icon, size: 20, color: iconColor),
-        title: Text(
-          text,
-          style: TextStyle(
-            fontFamily: 'Times New Roman',
-            fontSize: fontSize,
-            color: textColor,
-          ),
-        ),
-        hoverColor: Colors.blue.withOpacity(0.5),
-        onTap: onTap,
-      ),
+  Widget _buildListTile({required IconData icon, required String text, required VoidCallback onTap}) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(text),
+      onTap: onTap,
     );
   }
 }
