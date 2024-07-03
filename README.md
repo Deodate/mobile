@@ -18,7 +18,7 @@ This is claass assignment 1, 2, 3 #Mobile Application.
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/3d088c85-6b05-4ba0-ba12-2f13dad07f48)
 
-
+[5]. Model
 
 
 
