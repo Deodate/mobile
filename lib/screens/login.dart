@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -80,38 +79,41 @@ class _LoginState extends State<Login> {
                           SizedBox(height: 20),
                           SizedBox(
                             width: 150, // Adjust width as needed
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    return isDarkTheme
-                                        ? Colors.blue
-                                        : Colors.black;
-                                  },
-                                ),
-                                shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(
-                                        color: Colors.transparent),
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      return isDarkTheme
+                                          ? Colors.blue
+                                          : Colors.black;
+                                    },
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
+                                          color: Colors.transparent),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              onPressed: () {
-                                // Implement your login logic here
-                                // For example, authenticate user
-                                print('Login pressed');
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                onPressed: () {
+                                  // Implement your login logic here
+                                  // For example, authenticate user
+                                  print('Login pressed');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -131,9 +133,10 @@ class _LoginState extends State<Login> {
                             child: Text(
                               'If you have no account click here to register?',
                               style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 12,
+                                color: isDarkTheme ? Colors.red : Colors.black,
+                                fontSize: 14,
                                 decoration: TextDecoration.underline,
+                                decorationColor: Colors.red,
                               ),
                             ),
                           ),
