@@ -6,7 +6,7 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-[0]. DASHBOARD UI
+[0]. INITIALLY DASHBOARD UI
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/278d28a5-296f-4e49-8292-d0bc234c41f7)
 
