@@ -1,4 +1,4 @@
-# ASSIGNMENT 1,2 AND 3 UI 
+# ASSIGNMENT 1,2 AND 3 UI AND FUNCTIONS
 
 A new Flutter project.
 
