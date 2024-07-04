@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class Adminpanel extends StatefulWidget {
+  const Adminpanel({super.key});
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _AdminpanelState createState() => _AdminpanelState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _AdminpanelState extends State<Adminpanel> {
   bool _isDrawerOpen = false;
 
   void _toggleDrawer() {
@@ -32,7 +32,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '#24527',
+          'ADMIN PANEL',
           style: TextStyle(
             fontFamily: 'Times New Roman',
           ),
@@ -67,38 +67,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
+                    color: isDarkTheme ? Colors.black : Color.fromARGB(255, 3, 65, 38),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Mobile Class',
-                            style: TextStyle(
-                              color: isDarkTheme
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 223, 172, 4),
-                              fontSize: 38,
-                              fontFamily: 'Times New Roman',
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          CircleAvatar(
-                            radius: 75,
-                            backgroundImage:
-                                AssetImage("image/Flutter-App-development.jpg"),
-                          ),
-                          const SizedBox(height: 14),
-                          Text(
-                            'This is Assignment #Calculator & #SignUpLogin',
+                            'WELCOME BACK',
                             style: TextStyle(
                               color: isDarkTheme
                                   ? Colors.white
                                   : Color.fromARGB(255, 4, 4, 4),
-                              fontSize: 17,
+                              fontSize: 38,
                               fontFamily: 'Times New Roman',
                             ),
                           ),
+                        
+                    
                         ],
                       ),
                     ),
@@ -107,16 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Container(
                   height: 65,
                   color: isDarkTheme ? Colors.grey[800] : Colors.blue,
-                  // child: Center(
-                  //   child: Text(
-                  //     'Deodate Mugenzi',
-                  //     style: TextStyle(
-                  //       color: isDarkTheme ? Colors.white : Colors.black,
-                  //       fontSize: 15,
-                  //       fontFamily: 'Times New Roman',
-                  //     ),
-                  //   ),
-                  // ),
+                 
                 ),
               ],
             ),
@@ -203,12 +179,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             Positioned(
-              bottom: 15,
+              bottom: 0,
               left: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 65,
-                color: isDarkTheme ? Colors.grey[800] : Colors.blue,
+                color: isDarkTheme ? Colors.grey[800] : Color.fromARGB(255, 83, 87, 4),
                 child: Stack(
                   children: [
                     Positioned(
@@ -220,7 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.home,
-                                    color: Color.fromARGB(255, 1, 1, 1),
+                                    color: Color.fromARGB(255, 124, 241, 248),
                                     size: 30),
                                 onPressed: () {
                                   // Handle home icon tap
@@ -228,7 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       context, '/dashboard_screen');
                                 },
                               ),
-                              Text('Home'),
+                              // Text('Home'),
                             ],
                           ),
                           SizedBox(
@@ -238,33 +214,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           Column(
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.keyboard,
-                                    color: Color.fromARGB(255, 121, 90, 90),
+                                icon: const Icon(Icons.list,
+                                    color: Color.fromARGB(255, 25, 248, 36),
                                     size: 30),
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/home');
                                 },
                               ),
-                              Text('Calc'),
+                              // Text('Calc'),
                             ],
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width *
                                 0.13, // Adjust width for centering
                           ),
-                          Column(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.how_to_reg,
-                                    color: Color.fromARGB(255, 46, 237, 84),
-                                    size: 30),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/signup');
-                                },
-                              ),
-                              Text('Signup'),
-                            ],
-                          ),
+                          // Column(
+                          //   children: [
+                          //     IconButton(
+                          //       icon: const Icon(Icons.list,
+                          //           color: Color.fromARGB(255, 46, 237, 84),
+                          //           size: 30),
+                          //       onPressed: () {
+                          //         Navigator.pushNamed(context, '/signup');
+                          //       },
+                          //     ),
+                          //     // Text('Signup'),
+                          //   ],
+                          // ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width *
                                 0.28, // Adjust width for centering
@@ -288,14 +264,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: [
                             IconButton(
                               icon: const Icon(Icons.person,
-                                  color: Color.fromARGB(255, 250, 248, 248),
+                                  color: Color.fromARGB(255, 20, 49, 242),
                                   size: 30),
                               onPressed: () {
                                 // Handle user icon tap
-                                Navigator.pushNamed(context, '/adminPanel');
+                                Navigator.pushNamed(context, '/login');
                               },
                             ),
-                            const Text('User'),
+                            // const Text('User'),
                           ],
                         ),
                       ),

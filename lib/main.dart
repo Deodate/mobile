@@ -1,6 +1,7 @@
 import 'package:first_quiz/provider/BatteryService.dart';
 import 'package:first_quiz/provider/ConnectivityService.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
+import 'package:first_quiz/screens/adminPanel.dart';
 import 'package:first_quiz/screens/dashboard_screen.dart';
 import 'package:first_quiz/screens/home_screen.dart';
 import 'package:first_quiz/screens/login.dart';
@@ -44,6 +45,8 @@ class CalculatorApp extends StatelessWidget {
       '/home': (context) => const HomeScreen(),
       '/signup': (context) => const Signup(),
         '/login': (context) => const Login(),
+         '/dashboard_screen': (context) => const DashboardScreen(),
+           '/adminPanel': (context) => const Adminpanel(),
     };
   }
 }
