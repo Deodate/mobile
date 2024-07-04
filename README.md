@@ -24,5 +24,10 @@ This project is a starting point for a Flutter application.
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/12253ce8-36ac-42ae-82bf-1ff0bc228532)
 
+[4] ADMIN PANEL
+
+![image](https://github.com/Deodate/mobile/assets/13644752/673ca96c-1625-47e5-9026-61d8568e1e55)
+
+
 
 
