@@ -18,7 +18,7 @@ This is claass assignment 1, 2, 3 #Mobile Application.
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/3d088c85-6b05-4ba0-ba12-2f13dad07f48)
 
-[5]. Tggles between Light and Dark Mode
+[5]. Tggles between Light and Dark Mode UX
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/4a1a773e-8ba0-488e-9ed1-c5cf95a484e5)
 
