@@ -2,7 +2,7 @@ ID: 24527
 # Mobile  #flutter  #Calculator
 This is claass assignment 1, 2, 3 #Mobile Application.
 
-[1] UI / UX  //Completed
+[1] UI / UX  #Completed
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/1de95f6b-f553-4720-a0b0-e612d54e0b9d)
 
