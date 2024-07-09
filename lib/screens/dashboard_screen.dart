@@ -249,7 +249,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                            Column(
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.amp_stories,
+                                icon: const Icon(Icons.article_outlined,
                                     color: Color.fromARGB(255, 249, 225, 40),
                                     size: 30),
                                 onPressed: () {
