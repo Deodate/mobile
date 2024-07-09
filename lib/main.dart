@@ -1,3 +1,4 @@
+import 'package:first_quiz/MID/exam.dart';
 import 'package:first_quiz/provider/BatteryService.dart';
 import 'package:first_quiz/provider/ConnectivityService.dart';
 import 'package:first_quiz/provider/cal_provider.dart';
@@ -47,6 +48,7 @@ class CalculatorApp extends StatelessWidget {
         '/login': (context) => const Login(),
          '/dashboard_screen': (context) => const DashboardScreen(),
            '/adminPanel': (context) => const Adminpanel(),
+           '/exam': (context) => const ExamScreen(),
     };
   }
 }

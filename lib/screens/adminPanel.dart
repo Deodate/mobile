@@ -195,7 +195,7 @@ class _AdminpanelState extends State<Adminpanel> {
                           Column(
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.home,
+                                icon: const Icon(Icons.account_balance,
                                     color: Color.fromARGB(255, 124, 241, 248),
                                     size: 30),
                                 onPressed: () {
@@ -263,7 +263,7 @@ class _AdminpanelState extends State<Adminpanel> {
                         child: Column(
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.person,
+                              icon: const Icon(Icons.assignment_add,
                                   color: Color.fromARGB(255, 20, 49, 242),
                                   size: 30),
                               onPressed: () {

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class ExamScreen extends StatefulWidget {
+  const ExamScreen({super.key});
 
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  _ExamScreenState createState() => _ExamScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _ExamScreenState extends State<ExamScreen> {
   bool _isDrawerOpen = false;
 
   void _toggleDrawer() {
@@ -137,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       0.84, // 84% of screen height
                   color: isDarkTheme
                       ? Colors.grey[900]
-                      : Color.fromARGB(
+                      : const Color.fromARGB(
                           255, 19, 58, 103), // Setting drawer background color
                   child: Column(
                     children: [
