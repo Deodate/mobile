@@ -197,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                               _buildListTile(
                               icon: Icons.amp_stories_rounded,
-                              text: 'Exam',
+                              text: 'Mind - Exam',
                               fontSize: 20,
                               textColor: Colors.white,
                               iconColor: Colors.blue,

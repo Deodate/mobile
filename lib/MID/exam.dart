@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
 class ExamScreen extends StatefulWidget {
-  const ExamScreen({super.key});
+  const ExamScreen({Key? key}) : super(key: key);
 
   @override
   _ExamScreenState createState() => _ExamScreenState();
@@ -11,6 +11,7 @@ class ExamScreen extends StatefulWidget {
 
 class _ExamScreenState extends State<ExamScreen> {
   bool _isDrawerOpen = false;
+  bool _isSearching = false; // State variable to track search input visibility
 
   void _toggleDrawer() {
     setState(() {
@@ -21,6 +22,12 @@ class _ExamScreenState extends State<ExamScreen> {
   void _closeDrawer() {
     setState(() {
       _isDrawerOpen = false;
+    });
+  }
+
+  void _toggleSearch() {
+    setState(() {
+      _isSearching = !_isSearching;
     });
   }
 
@@ -61,150 +68,122 @@ class _ExamScreenState extends State<ExamScreen> {
             _closeDrawer();
           }
         },
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Mobile Class',
-                            style: TextStyle(
-                              color: isDarkTheme
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 223, 172, 4),
-                              fontSize: 38,
-                              fontFamily: 'Times New Roman',
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          CircleAvatar(
-                            radius: 75,
-                            backgroundImage:
-                                AssetImage("image/Flutter-App-development.jpg"),
-                          ),
-                          const SizedBox(height: 14),
-                          Text(
-                            'This is Assignment #Calculator & #SignUpLogin',
-                            style: TextStyle(
-                              color: isDarkTheme
-                                  ? Colors.white
-                                  : Color.fromARGB(255, 4, 4, 4),
-                              fontSize: 17,
-                              fontFamily: 'Times New Roman',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 65,
-                  color: isDarkTheme ? Colors.grey[800] : Colors.blue,
-                  // child: Center(
-                  //   child: Text(
-                  //     'Deodate Mugenzi',
-                  //     style: TextStyle(
-                  //       color: isDarkTheme ? Colors.white : Colors.black,
-                  //       fontSize: 15,
-                  //       fontFamily: 'Times New Roman',
-                  //     ),
-                  //   ),
-                  // ),
-                ),
-              ],
-            ),
-            if (_isDrawerOpen)
-              GestureDetector(
-                onTap: _closeDrawer,
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(1.0),
+                bottomRight: Radius.circular(90.0),
               ),
-            if (_isDrawerOpen)
-              Positioned(
-                top: 2,
-                left: 0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.50,
-                  height: MediaQuery.of(context).size.height *
-                      0.84, // 84% of screen height
-                  color: isDarkTheme
-                      ? Colors.grey[900]
-                      : const Color.fromARGB(
-                          255, 19, 58, 103), // Setting drawer background color
+              child: Container(
+                color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
+                child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 65,
-                        width: double.infinity, // Taking full width of drawer
-                        color: isDarkTheme ? Colors.grey[850] : Colors.blue,
-                        child: DrawerHeader(
-                          decoration: BoxDecoration(
-                            color: isDarkTheme ? Colors.grey[850] : Colors.blue,
-                          ),
-                          child: const Text(
-                            'Primary',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontFamily: 'Times New Roman',
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3.0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              iconSize: 20,
+                              onPressed: () {
+                                // Handle left search icon press
+                              },
                             ),
+                            SizedBox(width: 2),
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              iconSize: 20,
+                              onPressed: () {
+                                // Handle right search icon press
+                                _toggleSearch();
+                              },
+                            ),
+                            SizedBox(width: 2),
+                            if (_isSearching)
+                              Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Search...',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 0,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  // Handle search text field changes
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3.0),
+                        child: Text(
+                          'Discover books',
+                          style: TextStyle(
+                            color: isDarkTheme
+                                ? Colors.white
+                                : Color.fromARGB(255, 223, 172, 4),
+                            fontSize: 48,
+                            fontFamily: 'Times New Roman',
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
+                      const SizedBox(height: 14),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3.0),
+                        child: Row(
                           children: [
-                            _buildListTile(
-                              icon: Icons.keyboard,
-                              text: 'Calculator',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/home');
-                                _closeDrawer();
+                            TextButton(
+                              onPressed: () {
+                                // Handle action
                               },
+                              child: Text(
+                                'CLASSICS',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontFamily: 'Times New Roman',
+                                ),
+                              ),
                             ),
-                            _buildListTile(
-                              icon: Icons.email,
-                              text: 'Login',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              iconColor: Colors.red,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/login');
-                                _closeDrawer();
+                            SizedBox(width: 10),
+                            TextButton(
+                              onPressed: () {
+                                // Handle action
                               },
+                              child: Text(
+                                'NEW',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontFamily: 'Times New Roman',
+                                ),
+                              ),
                             ),
-                            _buildListTile(
-                              icon: Icons.document_scanner,
-                              text: 'Register',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              iconColor: Colors.yellow,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/signup');
-                                _closeDrawer();
+                            SizedBox(width: 10),
+                            TextButton(
+                              onPressed: () {
+                                // Handle action
                               },
-                            ),
-                              _buildListTile(
-                              icon: Icons.amp_stories_rounded,
-                              text: 'Exam',
-                              fontSize: 20,
-                              textColor: Colors.white,
-                              iconColor: Colors.blue,
-                              onTap: () {
-                                Navigator.pushNamed(context, '/exam');
-                                _closeDrawer();
-                              },
+                              child: Text(
+                                'UPCOMING',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontFamily: 'Times New Roman',
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -213,155 +192,63 @@ class _ExamScreenState extends State<ExamScreen> {
                   ),
                 ),
               ),
-            Positioned(
-              bottom: 15,
-              left: 0,
+            ),
+            Expanded(
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 65,
-                color: isDarkTheme ? Colors.grey[800] : Colors.blue,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 16,
-                      bottom: 0,
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.home,
-                                    color: Color.fromARGB(255, 1, 1, 1),
-                                    size: 30),
-                                onPressed: () {
-                                  // Handle home icon tap
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_screen');
-                                },
-                              ),
-                              const Text('Home'),
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width *
-                                0.12, // Adjust width for centering
-                          ),
-                           Column(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.amp_stories,
-                                    color: Color.fromARGB(255, 249, 225, 40),
-                                    size: 30),
-                                onPressed: () {
-                                  // Handle home icon tap
-                                  Navigator.pushNamed(
-                                      context, '/dashboard_screen');
-                                },
-                              ),
-                              const Text('Exam'),
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width *
-                                0.12, // Adjust width for centering
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.keyboard,
-                                    color: Color.fromARGB(255, 121, 90, 90),
-                                    size: 30),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/home');
-                                },
-                              ),
-                              const Text('Calc'),
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width *
-                                0.10, // Adjust width for centering
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.how_to_reg,
-                                    color: Color.fromARGB(255, 46, 237, 84),
-                                    size: 30),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/signup');
-                                },
-                              ),
-                              const Text('Signup'),
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width *
-                                0.20, // Adjust width for centering
-                          ),
-                        ],
-                      ),
-                    ),
-                     Positioned(
-                      right: 15,
-                      bottom: 0,
-                      child: MouseRegion(
-                        onEnter: (_) {
-                          // Handle hover enter for User icon
-                          print('Hover entered User');
-                        },
-                        onExit: (_) {
-                          // Handle hover exit for User icon
-                          print('Hover exited User');
-                        },
-                        child: Column(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.person,
-                                  color: Color.fromARGB(255, 250, 248, 248),
-                                  size: 30),
-                              onPressed: () {
-                                // Handle user icon tap
-                                Navigator.pushNamed(context, '/adminPanel');
-                              },
-                            ),
-                            const Text('User'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                color: Colors.white,
+                child: Center(
+                  child: Text(
+                    'Your main content here',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               ),
+            ),
+            Container(
+              height: 65,
+              color: isDarkTheme ? Colors.grey[800] : Colors.blue,
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildListTile({
-    required IconData icon,
-    required String text,
-    required VoidCallback onTap,
-    Color iconColor = Colors.black,
-    Color textColor = Colors.black,
-    double fontSize = 13,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: ListTile(
-        leading: Icon(icon, size: 20, color: iconColor),
-        title: Text(
-          text,
-          style: TextStyle(
-            fontFamily: 'Times New Roman',
-            fontSize: fontSize,
-            color: textColor,
-          ),
+      bottomNavigationBar: Container(
+        height: 65,
+        color: isDarkTheme ? Colors.grey[800] : Colors.blue,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.pushNamed(context, '/dashboard_screen');
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.amp_stories),
+              onPressed: () {
+                Navigator.pushNamed(context, '/exam');
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.keyboard),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.how_to_reg),
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.pushNamed(context, '/adminPanel');
+              },
+            ),
+          ],
         ),
-        hoverColor: Colors.blue.withOpacity(0.5),
-        onTap: onTap,
       ),
     );
   }
