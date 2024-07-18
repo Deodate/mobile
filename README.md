@@ -1,7 +1,7 @@
 Deadline 25 July 2024
 
 ID: 24527
-# Mobile  #flutter  #Calculator
+# Mobile  #flutter  #Calculator #MIDTERM
 This is claass assignment 1, 2, 3 #Mobile Application.
 
 [1] UI / UX  #Completed
