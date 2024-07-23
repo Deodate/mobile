@@ -1,6 +1,8 @@
+import 'package:first_quiz/MID/add_book.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
+
 
 class ExamScreen extends StatefulWidget {
   const ExamScreen({Key? key}) : super(key: key);
@@ -11,46 +13,32 @@ class ExamScreen extends StatefulWidget {
 
 class _ExamScreenState extends State<ExamScreen> {
   bool _isDrawerOpen = false;
-  bool _isSearching = false; // State variable to track search input visibility
-  final FocusNode _focusNode = FocusNode(); // FocusNode for the TextField
-  final ScrollController _scrollController = ScrollController(); // ScrollController for ListView
-
-  // State variable to track the selected menu item
+  bool _isSearching = false;
+  final FocusNode _focusNode = FocusNode();
+  final ScrollController _scrollController = ScrollController();
   String _selectedMenuItem = 'All Books';
 
-  void _toggleDrawer() {
-    setState(() {
-      _isDrawerOpen = !_isDrawerOpen;
-    });
-  }
+  void _toggleDrawer() => setState(() {
+        _isDrawerOpen = !_isDrawerOpen;
+      });
 
-  void _closeDrawer() {
-    setState(() {
-      _isDrawerOpen = false;
-    });
-  }
+  void _closeDrawer() => setState(() {
+        _isDrawerOpen = false;
+      });
 
-  void _toggleSearch() {
-    setState(() {
-      _isSearching = !_isSearching;
-      if (_isSearching) {
-        _focusNode.requestFocus(); // Request focus when search is activated
-      } else {
-        _focusNode.unfocus(); // Unfocus when search is deactivated
-      }
-    });
-  }
+  void _toggleSearch() => setState(() {
+        _isSearching = !_isSearching;
+        _isSearching ? _focusNode.requestFocus() : _focusNode.unfocus();
+      });
 
-  void _onMenuItemClicked(String menuItem) {
-    setState(() {
-      _selectedMenuItem = menuItem;
-    });
-  }
+  void _onMenuItemClicked(String menuItem) => setState(() {
+        _selectedMenuItem = menuItem;
+      });
 
   void _scrollToBottom() {
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
   }
@@ -64,17 +52,15 @@ class _ExamScreenState extends State<ExamScreen> {
       appBar: AppBar(
         title: const Text(
           '#24527',
-          style: TextStyle(
-            fontFamily: 'Times New Roman',
-          ),
+          style: TextStyle(fontFamily: 'Times New Roman'),
         ),
         leading: _isDrawerOpen
             ? IconButton(
-                icon: Icon(Icons.close, size: 20),
+                icon: const Icon(Icons.close, size: 20),
                 onPressed: _closeDrawer,
               )
             : IconButton(
-                icon: Icon(Icons.article_outlined, size: 20),
+                icon: const Icon(Icons.article_outlined, size: 20),
                 onPressed: _toggleDrawer,
               ),
         actions: [
@@ -88,434 +74,337 @@ class _ExamScreenState extends State<ExamScreen> {
       ),
       body: GestureDetector(
         onTap: () {
-          if (_isDrawerOpen) {
-            _closeDrawer();
-          }
-          if (_isSearching) {
-            setState(() {
-              _isSearching = false;
-              _focusNode.unfocus(); // Unfocus when clicking outside
-            });
-          }
+          if (_isDrawerOpen) _closeDrawer();
+          if (_isSearching) _toggleSearch();
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(1.0),
-                bottomRight: Radius.circular(90.0),
-              ),
-              child: Container(
-                color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            if (_isSearching)
-                              Expanded(
-                                child: TextField(
-                                  focusNode: _focusNode, // Assign the FocusNode
-                                  decoration: InputDecoration(
-                                    hintText: 'Search...',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 0,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                  // Handle search text field changes
-                                ),
-                              ),
-                            IconButton(
-                              icon: Icon(Icons.search),
-                              iconSize: 20,
-                              onPressed: _toggleSearch,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0),
-                        child: Text(
-                          'Discover books',
-                          style: TextStyle(
-                            color: isDarkTheme
-                                ? Colors.white
-                                : Color.fromARGB(255, 223, 172, 4),
-                            fontSize: 48,
-                            fontFamily: 'Times New Roman',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 7),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0),
-                        child: Row(
-                          children: [
-                            TextButton(
-                              onPressed: () => _onMenuItemClicked('All Books'),
-                              child: Text(
-                                'All Books',
-                                style: TextStyle(
-                                  color: _selectedMenuItem == 'All Books'
-                                      ? Color.fromARGB(255, 223, 172, 4)
-                                      : const Color.fromARGB(
-                                          255, 249, 247, 247),
-                                  fontSize: 17,
-                                  fontFamily: 'Times New Roman',
-                                  decoration: _selectedMenuItem == 'All Books'
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            TextButton(
-                              onPressed: () => _onMenuItemClicked('NEW'),
-                              child: Text(
-                                'NEW',
-                                style: TextStyle(
-                                  color: _selectedMenuItem == 'NEW'
-                                      ? Color.fromARGB(255, 223, 172, 4)
-                                      : Colors.black,
-                                  fontSize: 17,
-                                  fontFamily: 'Times New Roman',
-                                  decoration: _selectedMenuItem == 'NEW'
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            TextButton(
-                              onPressed: () => _onMenuItemClicked('UPCOMING'),
-                              child: Text(
-                                'UPCOMING',
-                                style: TextStyle(
-                                  color: _selectedMenuItem == 'UPCOMING'
-                                      ? Color.fromARGB(255, 223, 172, 4)
-                                      : Colors.black,
-                                  fontSize: 17,
-                                  fontFamily: 'Times New Roman',
-                                  decoration: _selectedMenuItem == 'UPCOMING'
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            _buildHeader(isDarkTheme),
+            _buildBookList(),
+            // _buildAuthorsSection(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _buildBottomNavBar(isDarkTheme),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddBookScreen(),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          );
+        },
+        icon: const Icon(Icons.add),
+        label: const Text("Add Book"),
+        backgroundColor: const Color(0xFF317AF7),
+      ),
+    );
+  }
+
+  Widget _buildHeader(bool isDarkTheme) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(1.0),
+        bottomRight: Radius.circular(90.0),
+      ),
+      child: Container(
+        color: isDarkTheme ? Colors.black : const Color(0xFF317AF7),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      color: Colors.white,
-                      height: 320,
-                      child: ListView.builder(
-                        controller: _scrollController, // Attach ScrollController here
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4, // Replace with your actual list size
-                        itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: 270,
-                            child: _buildBookCard(
-                              'image/Flutter-App-development.jpg',
-                              'Book Title ${index + 1}',
-                              'Author Name ${index + 1}',
+                    if (_isSearching)
+                      Expanded(
+                        child: TextField(
+                          focusNode: _focusNode,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 0,
                             ),
-                          );
-                        },
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          // Handle search text field changes
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-
-                   Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Authors to follow',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: _scrollToBottom, // Scroll to bottom function
-                                child: Text(
-                                  'Show All',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10),
-
-                    // Row with cards
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 4,
-                              child: Container(
-                                height: 110,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(5),
-                                      child: Image.asset(
-                                        'image/Flutter-App-development.jpg',
-                                        width: 50,
-                                        height: 50,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Mr. Deodate', // Replace with your author name
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Maths', // Replace with your title
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 4,
-                              child: Container(
-                                height: 110,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(5),
-                                      child: Image.asset(
-                                        'image/Flutter-App-development.jpg',
-                                        width: 50,
-                                        height: 50,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Mr. Mugenzi', // Replace with your author name
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Physics', // Replace with your title
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    IconButton(
+                      icon: const Icon(Icons.search),
+                      iconSize: 20,
+                      onPressed: _toggleSearch,
                     ),
                   ],
                 ),
               ),
-            ),
-             Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Authors to follow',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: _scrollToBottom, // Scroll to bottom function
-                                child: Text(
-                                  'Show All',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+              const SizedBox(height: 14),
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Text(
+                  'Discover books',
+                  style: TextStyle(
+                    color: isDarkTheme
+                        ? Colors.white
+                        : const Color.fromARGB(255, 223, 172, 4),
+                    fontSize: 48,
+                    fontFamily: 'Times New Roman',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 7),
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Row(
+                  children: [
+                    _buildMenuItem('All Books'),
+                    const SizedBox(width: 10),
+                    _buildMenuItem('NEW'),
+                    const SizedBox(width: 10),
+                    _buildMenuItem('UPCOMING'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(String menuItem) {
+    return TextButton(
+      onPressed: () => _onMenuItemClicked(menuItem),
+      child: Text(
+        menuItem,
+        style: TextStyle(
+          color: _selectedMenuItem == menuItem
+              ? const Color.fromARGB(255, 223, 172, 4)
+              : (Provider.of<ThemeNotifier>(context).isDarkTheme ? Colors.white : Colors.black),
+          fontSize: 17,
+          fontFamily: 'Times New Roman',
+          decoration: _selectedMenuItem == menuItem
+              ? TextDecoration.underline
+              : TextDecoration.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBookList() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
             Container(
-              height: 80,
-              color: isDarkTheme ? Colors.grey[800] : Colors.blue,
+              color: Colors.white,
+              height: 300,
+              child: ListView.builder(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    height: 360,
+                    child: _buildBookCard(
+                      'image/Flutter-App-development.jpg',
+                      'Book Title ${index + 1}',
+                      'Author Name ${index + 1}',
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildBottomNavItem(Icons.home, 'Home', '/dashboard_screen'),
-                  _buildBottomNavItem(Icons.article_outlined, 'Exam', '/exam'),
-                  _buildBottomNavItem(Icons.keyboard, 'Calc', '/home'),
-                  _buildBottomNavItem(Icons.how_to_reg, 'Signup', '/signup'),
-                  _buildBottomNavItem(Icons.person, 'User', '/adminPanel'),
+                  const Text(
+                    'Authors to follow',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: _scrollToBottom,
+                        child: const Text(
+                          'Show All',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
+            const SizedBox(height: 10),
+            _buildAuthorCards(),
           ],
         ),
       ),
     );
   }
 
-  // Function to build a bottom navigation item
-  Widget _buildBottomNavItem(IconData icon, String label, String route) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        IconButton(
-          icon: Icon(icon, size: 30),
-          color: _getBottomNavIconColor(label),
-          onPressed: () {
-            Navigator.pushNamed(context, route);
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: Text(label),
-        ),
-      ],
+  Widget _buildAuthorCards() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildAuthorCard('image/Flutter-App-development.jpg', 'Mr. Deodate', 'Maths'),
+          const SizedBox(width: 10),
+          _buildAuthorCard('image/Flutter-App-development.jpg', 'Mr. Mugenzi', 'Physics'),
+        ],
+      ),
     );
   }
 
-  // Function to get bottom navigation icon color based on the current route
-  Color _getBottomNavIconColor(String label) {
-    switch (label) {
-      case 'Home':
-        return Colors.black;
-      case 'Exam':
-        return Color.fromARGB(255, 249, 225, 40);
-      case 'Calc':
-        return Color.fromARGB(255, 121, 90, 90);
-      case 'Signup':
-        return Color.fromARGB(255, 46, 237, 84);
-      case 'User':
-        return Color.fromARGB(255, 250, 248, 248);
-      default:
-        return Colors.black;
-    }
+  Widget _buildAuthorCard(String imagePath, String authorName, String title) {
+    return Expanded(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 4,
+        child: Container(
+          height: 90,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  imagePath,
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    authorName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
-  // Function to build a card for a book
-  Widget _buildBookCard(String imagePath, String bookTitle, String authorName) {
-    return Card(
-      elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            imagePath,
-            width: 150,
-            height: 230,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  bookTitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+  Widget _buildBookCard(String imagePath, String title, String author) {
+    return GestureDetector(
+      onTap: () {
+        // Handle book card tap
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 4,
+        child: Container(
+          width: 200,
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  imagePath,
+                  width: 200,
+                  height: 150,
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: 4),
-                Text(
-                  authorName,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                author,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildBottomNavBar(bool isDarkTheme) {
+    return BottomNavigationBar(
+      backgroundColor: isDarkTheme ? Colors.black : Colors.white,
+      selectedItemColor: isDarkTheme ? Colors.blueAccent : Colors.blue,
+      unselectedItemColor: isDarkTheme ? Colors.grey : Colors.black54,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: 'Favorites',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          label: 'Profile',
+        ),
+      ],
+      onTap: (index) {
+        // Handle bottom navigation bar taps
+      },
     );
   }
 }

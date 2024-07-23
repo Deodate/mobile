@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -83,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 75,
                             backgroundImage:
                                 AssetImage("image/Flutter-App-development.jpg"),
@@ -94,7 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             style: TextStyle(
                               color: isDarkTheme
                                   ? Colors.white
-                                  : Color.fromARGB(255, 4, 4, 4),
+                                  : const Color.fromARGB(255, 4, 4, 4),
                               fontSize: 17,
                               fontFamily: 'Times New Roman',
                             ),
@@ -137,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       0.84, // 84% of screen height
                   color: isDarkTheme
                       ? Colors.grey[900]
-                      : Color.fromARGB(
+                      : const Color.fromARGB(
                           255, 19, 58, 103), // Setting drawer background color
                   child: Column(
                     children: [

@@ -17,8 +17,8 @@ dependencies:
   battery_plus: ^6.0.1 
   fluttertoast: ^8.2.6
   shared_preferences: ^2.0.15
-
-  http: ^1.2.1  
+  sqflite: ^2.2.4+1 
+  http: ^1.2.2
   get: ^4.6.5
 
 dev_dependencies:
