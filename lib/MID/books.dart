@@ -14,38 +14,65 @@ class _BooksState extends State<Books> {
 
   bool _isLoading = true;
   bool _isSearching = false;
-  Timer? _debounce;
+
+// Remove these lines
+Timer? _debounce;
+// ...
+
+
   final TextEditingController _searchController = TextEditingController();
     List<Map<String, dynamic>> _allBooks = [];
   List<Map<String, dynamic>> _displayedBooks = [];
 
-  void _refreshData() async {
-  final data = await SQLHelper.getData();
+  // void _refreshData() async {
+  //   final data = await SQLHelper.getData();
+  //   setState(() {
+  //     _allData = data;
+  //     _displayedBooks = _allBooks;
+  //     _isLoading = false;
+  //   });
+  // }
+
+ void _searchData(String query) {
   setState(() {
-    _allBooks = data;
-    _displayedBooks = _allBooks;
-    _isLoading = false;
+    if (query.isEmpty) {
+      _displayedBooks = List.from(_allData);
+    } else {
+      _displayedBooks = _allData.where((book) =>
+        book['bookName'].toString().toLowerCase().contains(query.toLowerCase()) ||
+        book['authorName'].toString().toLowerCase().contains(query.toLowerCase())
+      ).toList();
+    }
   });
 }
 
-   Future<void> _searchData(String query) async {
-   if (query.isEmpty) {
-    setState(() {
-      _displayedBooks = _allBooks;
-    });
-  } else {
-    final searchResults = await SQLHelper.searchData(query);
-    setState(() {
-      _displayedBooks = searchResults;
-    });
-  }
-  }
+  //  Future<void> _searchData(String query) async {
+  //  if (query.isEmpty) {
+  //   setState(() {
+  //     _displayedBooks = _allBooks;
+  //   });
+  // } else {
+  //   final searchResults = await SQLHelper.searchData(query);
+  //   setState(() {
+  //     _displayedBooks = searchResults;
+  //   });
+  // }
+  // }
 
   @override
   void initState() {
     super.initState();
      _refreshData();
   }
+
+  void _refreshData() async {
+  final data = await SQLHelper.getData();
+  setState(() {
+    _allData = data;
+    _displayedBooks = List.from(_allData);
+    _isLoading = false;
+  });
+}
 
 
   Future<void> _addData() async {
@@ -90,7 +117,7 @@ class _BooksState extends State<Books> {
       await SQLHelper.deleteData(id);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Book deleted successfully'),
+          content: Text('Book deleted successfully!'),
           backgroundColor: Colors.redAccent,
         ),
       );
@@ -329,37 +356,28 @@ class _BooksState extends State<Books> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
     backgroundColor: Color(0xFF317AF7),
     appBar: AppBar(
       title: _isSearching
-          ? TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                hintStyle: TextStyle(color: Colors.black),
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              style: TextStyle(color: Colors.black),
-              onChanged: (query) {
-                if (_debounce?.isActive ?? false) _debounce!.cancel();
-                _debounce = Timer(const Duration(milliseconds: 500), () {
-                  if (query.isNotEmpty) {
-                    _searchData(query);
-                  } else {
-                    setState(() {
-                      _displayedBooks = _allBooks;
-                    });
-                  }
-                });
-              },
-            )
+      ? TextField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.black),
+            filled: true,
+            fillColor: Colors.grey[200],
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          style: TextStyle(color: Colors.black),
+          onChanged: (query) {
+            _searchData(query);
+          },
+        )
           : const Text("MY BOOK LIBRARY"),
       actions: [
         IconButton(
@@ -370,70 +388,72 @@ Widget build(BuildContext context) {
               _isSearching = !_isSearching;
               if (!_isSearching) {
                 _searchController.clear();
-                _displayedBooks = _allBooks;
+                _searchData('');
               }
-            });
-          },
-        ),
-      ],
-    ),
-    body: _isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: _displayedBooks.length,
-            itemBuilder: (context, index) {
-              final book = _displayedBooks[index];
-              return Card(
-                margin: const EdgeInsets.all(15),
-                child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Text(
-                      book['bookName'] ?? 'No Title',
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  subtitle: Text(
-                    'Author: ${book['authorName'] ?? 'Unknown'}\n'
-                    'Pages: ${book['pageNumber'] ?? 'N/A'}\n'
-                    'Published: ${book['datePublished'] ?? 'Unknown'}\n'
-                    'City: ${book['cityPublish'] ?? 'Unknown'}',
-                  ),
-                  trailing: Wrap(
-                    spacing: 12,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () {
-                          showBottomSheet(book['id']);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        onPressed: () {
-                          _deleteData(book['id']);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              });
             },
           ),
-    floatingActionButton: ElevatedButton(
-      onPressed: () => showBottomSheet(null),
-      child: Text('Add'),
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.yellow,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        ],
       ),
-    ),
-  );
-}
+      body: _isLoading
+    ? const Center(child: CircularProgressIndicator())
+    : ListView.builder(
+       itemCount: _displayedBooks.length,
+        itemBuilder: (context, index) {
+         final book = _displayedBooks[index];
+          return Card(
+            margin: const EdgeInsets.all(15),
+            child: ListTile(
+              title: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Text(
+                  book['bookName'] ?? 'No Title',
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              subtitle: Text(
+                'Author: ${book['authorName'] ?? 'Unknown'}\n'
+                'Pages: ${book['pageNumber'] ?? 'N/A'}\n'
+                'Published: ${book['datePublished'] ?? 'Unknown'}\n'
+                'City: ${book['cityPublish'] ?? 'Unknown'}',
+              ),
+              trailing: Wrap(
+                spacing: 12,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.blue),
+                    onPressed: () {
+                      showBottomSheet(book['id']);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    onPressed: () {
+                      _deleteData(book['id']);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () =>
+            showBottomSheet(null), // Call the function to show the bottom sheet
+        child: Text('Add'), // Text for the button
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.yellow, // Text color
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8), // Rectangle shape
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: 20, vertical: 10), // Padding inside the button
+        ),
+      ),
+    );
+  }
 }

@@ -13,7 +13,11 @@ class ExamScreen extends StatefulWidget {
 
   @override
   _ExamScreenState createState() => _ExamScreenState();
+  
 }
+
+List<Map<String, dynamic>> _books = [];
+bool _isLoading = true;
 
 class _ExamScreenState extends State<ExamScreen> {
   bool _isDrawerOpen = false;
@@ -47,6 +51,23 @@ class _ExamScreenState extends State<ExamScreen> {
     );
   }
 
+  Future<void> _refreshBooks() async {
+  setState(() {
+    _isLoading = true;
+  });
+  final data = await SQLHelper.getData();
+  setState(() {
+    _books = data;
+    _isLoading = false;
+  });
+}
+
+@override
+void initState() {
+  super.initState();
+  _refreshBooks();
+}
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
@@ -76,7 +97,9 @@ class _ExamScreenState extends State<ExamScreen> {
           ),
         ],
       ),
-      body: GestureDetector(
+      body: _isLoading
+      ? const Center(child: CircularProgressIndicator())
+      : GestureDetector(
         onTap: () {
           if (_isDrawerOpen) _closeDrawer();
           if (_isSearching) _toggleSearch();
@@ -203,74 +226,79 @@ class _ExamScreenState extends State<ExamScreen> {
       ),
     );
   }
-
-  Widget _buildBookList() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              color: Colors.white,
-              height: 300,
-              child: ListView.builder(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: 4,
-                itemBuilder: (context, index) {
+Widget _buildBookList() {
+  return Expanded(
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            color: Colors.white,
+            height: 300,
+            child: ListView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: _books.length,  // Use _books.length instead of a hardcoded number
+              itemBuilder: (context, index) {
+                if (index < _books.length) {
+                  var book = _books[index];
                   return SizedBox(
                     height: 360,
                     child: _buildBookCard(
                       'image/Flutter-App-development.jpg',
-                      'Book Title ${index + 1}',
-                      'Author Name ${index + 1}',
+                      book['bookName'] ?? 'Unknown Title',
+                      book['authorName'] ?? 'Unknown Author',
                     ),
                   );
-                },
-              ),
+                } else {
+                  return SizedBox.shrink(); // Return an empty widget if index is out of bounds
+                }
+              },
             ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Authors to follow',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Authors to follow',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: _scrollToBottom,
-                        child: const Text(
-                          'Show All',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: _scrollToBottom,
+                      child: const Text(
+                        'Show All',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.red,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            _buildAuthorCards(),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          _buildAuthorCards(),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildAuthorCards() {
     return Padding(
@@ -335,7 +363,7 @@ class _ExamScreenState extends State<ExamScreen> {
     );
   }
 
-  Widget _buildBookCard(String imagePath, String title, String author) {
+  Widget _buildBookCard(String imagePath, String title, String author ) {
     return GestureDetector(
       onTap: () {
         // Handle book card tap
