@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:first_quiz/MID/book_registration.dart';
 import 'package:flutter/material.dart';
 import 'sql_helper.dart';
@@ -11,20 +13,40 @@ class _BooksState extends State<Books> {
   List<Map<String, dynamic>> _allData = [];
 
   bool _isLoading = true;
+  bool _isSearching = false;
+  Timer? _debounce;
+  final TextEditingController _searchController = TextEditingController();
+    List<Map<String, dynamic>> _allBooks = [];
+  List<Map<String, dynamic>> _displayedBooks = [];
 
   void _refreshData() async {
-    final data = await SQLHelper.getData();
+  final data = await SQLHelper.getData();
+  setState(() {
+    _allBooks = data;
+    _displayedBooks = _allBooks;
+    _isLoading = false;
+  });
+}
+
+   Future<void> _searchData(String query) async {
+   if (query.isEmpty) {
     setState(() {
-      _allData = data;
-      _isLoading = false;
+      _displayedBooks = _allBooks;
     });
+  } else {
+    final searchResults = await SQLHelper.searchData(query);
+    setState(() {
+      _displayedBooks = searchResults;
+    });
+  }
   }
 
   @override
   void initState() {
     super.initState();
-    _refreshData();
+     _refreshData();
   }
+
 
   Future<void> _addData() async {
     final bookName = _bookNameController.text;
@@ -110,38 +132,50 @@ class _BooksState extends State<Books> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // **Updated: Added title for the form**
+                const Text(
+                  'Register a Book', // Title text
+                  style: TextStyle(
+                    fontSize: 20, // Font size for the title
+                    fontWeight:
+                        FontWeight.bold, // Bold font weight for the title
+                    color: Colors.black, // Black color for the title text
+                  ),
+                ),
+                const SizedBox(
+                    height: 20), // Spacing between title and form fields
                 TextField(
                   controller: _bookNameController
                     ..text = existingData['bookName'] ?? '',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Book Name',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextField(
                   controller: _authorNameController
                     ..text = existingData['authorName'] ?? '',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Author Name',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextField(
                   controller: _pageNumberController
                     ..text = existingData['pageNumber']?.toString() ?? '',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Page Number',
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextField(
                   controller: _datePublishedController
                     ..text = existingData['datePublished'] ?? '',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Date Published',
                   ),
@@ -150,7 +184,7 @@ class _BooksState extends State<Books> {
                 TextField(
                   controller: _cityPublishController
                     ..text = existingData['cityPublish'] ?? '',
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'City Published',
                   ),
@@ -165,6 +199,14 @@ class _BooksState extends State<Books> {
                         Navigator.of(context).pop(); // Close the bottom sheet
                       },
                       child: Text('Update'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.green, // Black text color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(8), // Rectangle shape
+                        ),
+                      ),
                     ),
                     SizedBox(width: 8),
                     ElevatedButton(
@@ -173,16 +215,24 @@ class _BooksState extends State<Books> {
                         Navigator.of(context).pop(); // Close the bottom sheet
                       },
                       child: Text('Delete'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.red, // Black text color
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(8), // Rectangle shape
+                        ),
+                      ),
                     ),
                   ],
-                ),
+                )
               ],
             ),
           );
         },
       );
     } else {
-      // Show a blank form if `id` is null (for adding new data)
+      // Show a blank form if id is null (for adding new data)
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -256,16 +306,20 @@ class _BooksState extends State<Books> {
                       print("Data Added!");
                     },
                     child: Text(id == null ? 'Add' : 'Update'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: id == null
+                          ? Colors.blue
+                          : Colors
+                              .green, // Blue for Add button, Green for Update
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rectangle shape
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    _addData();
-                    Navigator.of(context).pop(); // Close the bottom sheet
-                  },
-                  child: Text('Add'),
-                ),
               ],
             ),
           );
@@ -275,63 +329,111 @@ class _BooksState extends State<Books> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF317AF7),
-      appBar: AppBar(
-        title: const Text("MY BOOK LIBRARY"),
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _allData.length,
-              itemBuilder: (context, index) {
-                final book = _allData[index];
-                return Card(
-                  margin: const EdgeInsets.all(15),
-                  child: ListTile(
-                    title: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Text(
-                        book['bookName'] ?? 'No Title',
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Color(0xFF317AF7),
+    appBar: AppBar(
+      title: _isSearching
+          ? TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                hintStyle: TextStyle(color: Colors.black),
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              style: TextStyle(color: Colors.black),
+              onChanged: (query) {
+                if (_debounce?.isActive ?? false) _debounce!.cancel();
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  if (query.isNotEmpty) {
+                    _searchData(query);
+                  } else {
+                    setState(() {
+                      _displayedBooks = _allBooks;
+                    });
+                  }
+                });
+              },
+            )
+          : const Text("MY BOOK LIBRARY"),
+      actions: [
+        IconButton(
+          icon: Icon(_isSearching ? Icons.close : Icons.search),
+          color: _isSearching ? Colors.red : Colors.blue,
+          onPressed: () {
+            setState(() {
+              _isSearching = !_isSearching;
+              if (!_isSearching) {
+                _searchController.clear();
+                _displayedBooks = _allBooks;
+              }
+            });
+          },
+        ),
+      ],
+    ),
+    body: _isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            itemCount: _displayedBooks.length,
+            itemBuilder: (context, index) {
+              final book = _displayedBooks[index];
+              return Card(
+                margin: const EdgeInsets.all(15),
+                child: ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Text(
+                      book['bookName'] ?? 'No Title',
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
                     ),
-                    subtitle: Text(
-                      'Author: ${book['authorName'] ?? 'Unknown'}\n'
-                      'Pages: ${book['pageNumber'] ?? 'N/A'}\n'
-                      'Published: ${book['datePublished'] ?? 'Unknown'}\n'
-                      'City: ${book['cityPublish'] ?? 'Unknown'}',
-                    ),
-                    trailing: Wrap(
-                      spacing: 12, // space between two icons
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () {
-                            showBottomSheet(book['id']);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            _deleteData(book['id']);
-                          },
-                        ),
-                      ],
-                    ),
                   ),
-                );
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            showBottomSheet(null), // Call the function to show the bottom sheet
-        child: const Icon(Icons.add), // Icon for the button
-        tooltip: 'Add Book', // Tooltip text
+                  subtitle: Text(
+                    'Author: ${book['authorName'] ?? 'Unknown'}\n'
+                    'Pages: ${book['pageNumber'] ?? 'N/A'}\n'
+                    'Published: ${book['datePublished'] ?? 'Unknown'}\n'
+                    'City: ${book['cityPublish'] ?? 'Unknown'}',
+                  ),
+                  trailing: Wrap(
+                    spacing: 12,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                          showBottomSheet(book['id']);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          _deleteData(book['id']);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+    floatingActionButton: ElevatedButton(
+      onPressed: () => showBottomSheet(null),
+      child: Text('Add'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.yellow,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
-    );
-  }
+    ),
+  );
+}
 }
