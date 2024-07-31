@@ -12,6 +12,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool _isDrawerOpen = false;
+  bool _isEnglish = true;
 
   void _toggleDrawer() {
     setState(() {
@@ -25,19 +26,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  void _toggleLanguage() {
+    setState(() {
+      _isEnglish = !_isEnglish;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     final isDarkTheme = themeNotifier.isDarkTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          '#24527',
-          style: TextStyle(
-            fontFamily: 'Times New Roman',
-          ),
-        ),
+     appBar: AppBar(
         leading: _isDrawerOpen
             ? IconButton(
                 icon: Icon(Icons.close, size: 20),
@@ -47,6 +48,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: Icon(Icons.menu, size: 20),
                 onPressed: _toggleDrawer,
               ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '#24527',
+              style: TextStyle(
+                fontFamily: 'Times New Roman',
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(width: 10), // Spacing between title and button
+            TextButton(
+              onPressed: _toggleLanguage,
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: _isEnglish ? Colors.blue : Colors.red,
+              ),
+              child: Text(_isEnglish ? 'English' : 'Français'),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             icon: Icon(isDarkTheme ? Icons.brightness_7 : Icons.brightness_3),
@@ -74,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Mobile Class',
+                            _isEnglish ? 'Mobile Class' : 'Classe Mobile',
                             style: TextStyle(
                               color: isDarkTheme
                                   ? Colors.white
@@ -91,7 +113,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           const SizedBox(height: 14),
                           Text(
-                            'This is Assignment #Calculator & #SignUpLogin',
+                            _isEnglish
+                                ? 'This is Assignment #Calculator & #SignUpLogin'
+                                : "C'est le devoir #Calculator & #SignUpLogin",
                             style: TextStyle(
                               color: isDarkTheme
                                   ? Colors.white
@@ -108,16 +132,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Container(
                   height: 65,
                   color: isDarkTheme ? Colors.grey[800] : Colors.blue,
-                  // child: Center(
-                  //   child: Text(
-                  //     'Deodate Mugenzi',
-                  //     style: TextStyle(
-                  //       color: isDarkTheme ? Colors.white : Colors.black,
-                  //       fontSize: 15,
-                  //       fontFamily: 'Times New Roman',
-                  //     ),
-                  //   ),
-                  // ),
                 ),
               ],
             ),
@@ -150,8 +164,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           decoration: BoxDecoration(
                             color: isDarkTheme ? Colors.grey[850] : Colors.blue,
                           ),
-                          child: const Text(
-                            'Primary',
+                          child: Text(
+                            _isEnglish ? 'Primary' : 'Primaire',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -166,7 +180,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: [
                             _buildListTile(
                               icon: Icons.keyboard,
-                              text: 'Calculator',
+                              text: _isEnglish ? 'Calculator' : 'Calculatrice',
                               fontSize: 20,
                               textColor: Colors.white,
                               onTap: () {
@@ -176,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             _buildListTile(
                               icon: Icons.email,
-                              text: 'Login',
+                              text: _isEnglish ? 'Login' : 'Connexion',
                               fontSize: 20,
                               textColor: Colors.white,
                               iconColor: Colors.red,
@@ -187,7 +201,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             _buildListTile(
                               icon: Icons.document_scanner,
-                              text: 'Register',
+                              text: _isEnglish ? 'Register' : "S'inscrire",
                               fontSize: 20,
                               textColor: Colors.white,
                               iconColor: Colors.yellow,
@@ -196,9 +210,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 _closeDrawer();
                               },
                             ),
-                              _buildListTile(
+                            _buildListTile(
                               icon: Icons.amp_stories_rounded,
-                              text: 'Mind - Exam',
+                              text: _isEnglish ? 'Mind - Exam' : 'Esprit - Examen',
                               fontSize: 20,
                               textColor: Colors.white,
                               iconColor: Colors.blue,
@@ -235,12 +249,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     color: Color.fromARGB(255, 1, 1, 1),
                                     size: 30),
                                 onPressed: () {
-                                  // Handle home icon tap
                                   Navigator.pushNamed(
                                       context, '/dashboard_screen');
                                 },
                               ),
-                              const Text('Home'),
+                              Text(_isEnglish ? 'Home' : 'Accueil'),
                             ],
                           ),
                           SizedBox(
@@ -254,12 +267,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     color: Color.fromARGB(255, 249, 225, 40),
                                     size: 30),
                                 onPressed: () {
-                                  // Handle home icon tap
                                   Navigator.pushNamed(
                                       context, '/dashboard_screen');
                                 },
                               ),
-                              const Text('Exam'),
+                              Text(_isEnglish ? 'Exam' : 'Examen'),
                             ],
                           ),
                           SizedBox(
@@ -276,7 +288,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Navigator.pushNamed(context, '/home');
                                 },
                               ),
-                              const Text('Calc'),
+                              Text(_isEnglish ? 'Calc' : 'Calc'),
                             ],
                           ),
                           SizedBox(
@@ -293,7 +305,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   Navigator.pushNamed(context, '/signup');
                                 },
                               ),
-                              const Text('Signup'),
+                              Text(_isEnglish ? 'Signup' : "S'inscrire"),
                             ],
                           ),
                           SizedBox(
@@ -303,16 +315,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ],
                       ),
                     ),
-                     Positioned(
+                    Positioned(
                       right: 15,
                       bottom: 0,
                       child: MouseRegion(
                         onEnter: (_) {
-                          // Handle hover enter for User icon
                           print('Hover entered User');
                         },
                         onExit: (_) {
-                          // Handle hover exit for User icon
                           print('Hover exited User');
                         },
                         child: Column(
@@ -322,11 +332,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   color: Color.fromARGB(255, 250, 248, 248),
                                   size: 30),
                               onPressed: () {
-                                // Handle user icon tap
                                 Navigator.pushNamed(context, '/adminPanel');
                               },
                             ),
-                            const Text('User'),
+                            Text(_isEnglish ? 'User' : 'Utilisateur'),
                           ],
                         ),
                       ),
@@ -352,16 +361,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Material(
       color: Colors.transparent,
       child: ListTile(
-        leading: Icon(icon, size: 20, color: iconColor),
+        leading: Icon(icon, color: iconColor),
         title: Text(
           text,
           style: TextStyle(
-            fontFamily: 'Times New Roman',
-            fontSize: fontSize,
             color: textColor,
+            fontSize: fontSize,
           ),
         ),
-        hoverColor: Colors.blue.withOpacity(0.5),
         onTap: onTap,
       ),
     );

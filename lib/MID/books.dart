@@ -24,15 +24,6 @@ Timer? _debounce;
     List<Map<String, dynamic>> _allBooks = [];
   List<Map<String, dynamic>> _displayedBooks = [];
 
-  // void _refreshData() async {
-  //   final data = await SQLHelper.getData();
-  //   setState(() {
-  //     _allData = data;
-  //     _displayedBooks = _allBooks;
-  //     _isLoading = false;
-  //   });
-  // }
-
  void _searchData(String query) {
   setState(() {
     if (query.isEmpty) {
@@ -45,19 +36,6 @@ Timer? _debounce;
     }
   });
 }
-
-  //  Future<void> _searchData(String query) async {
-  //  if (query.isEmpty) {
-  //   setState(() {
-  //     _displayedBooks = _allBooks;
-  //   });
-  // } else {
-  //   final searchResults = await SQLHelper.searchData(query);
-  //   setState(() {
-  //     _displayedBooks = searchResults;
-  //   });
-  // }
-  // }
 
   @override
   void initState() {
@@ -88,6 +66,7 @@ Timer? _debounce;
       pageNumber,
       datePublished.isEmpty ? null : datePublished,
       cityPublish.isEmpty ? null : cityPublish,
+      null
     );
 
     _refreshData();

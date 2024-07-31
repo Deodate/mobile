@@ -1,3 +1,4 @@
+import 'package:first_quiz/MID/BookDetailsScreen%20.dart';
 import 'package:first_quiz/MID/add_book.dart';
 import 'package:first_quiz/MID/book_model.dart';
 import 'package:first_quiz/MID/book_registration.dart';
@@ -239,7 +240,7 @@ Widget _buildBookList() {
             child: ListView.builder(
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: _books.length,  // Use _books.length instead of a hardcoded number
+              itemCount: _books.length,
               itemBuilder: (context, index) {
                 if (index < _books.length) {
                   var book = _books[index];
@@ -252,7 +253,7 @@ Widget _buildBookList() {
                     ),
                   );
                 } else {
-                  return SizedBox.shrink(); // Return an empty widget if index is out of bounds
+                  return SizedBox.shrink();
                 }
               },
             ),
@@ -299,6 +300,52 @@ Widget _buildBookList() {
   );
 }
 
+void _showImageDescription(BuildContext context, String imagePath, String title, String author) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                imagePath,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(height: 16),
+              Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Author: $author',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 
   Widget _buildAuthorCards() {
     return Padding(
@@ -306,9 +353,9 @@ Widget _buildBookList() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildAuthorCard('image/Flutter-App-development.jpg', 'Mr. Deodate', 'Maths'),
+          _buildAuthorCard('image/aaai.jpg', 'Mr. Deodate', 'Holly'),
           const SizedBox(width: 10),
-          _buildAuthorCard('image/Flutter-App-development.jpg', 'Mr. Mugenzi', 'Physics'),
+          _buildAuthorCard('image/aaaii.jpg', 'Jeniffer', 'Politics'),
         ],
       ),
     );
@@ -363,53 +410,67 @@ Widget _buildBookList() {
     );
   }
 
-  Widget _buildBookCard(String imagePath, String title, String author ) {
-    return GestureDetector(
-      onTap: () {
-        // Handle book card tap
-      },
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        elevation: 4,
-        child: Container(
-          width: 200,
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  imagePath,
-                  width: 200,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                author,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              ),
-            ],
+ Widget _buildBookCard(String imagePath, String title, String author) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BookDetailsScreen(
+            imagePath: imagePath,
+            title: title,
+            author: author,
+            rating: 4.5, // You may want to add this to your book data
+            description: 'A detailed description of the book...', // Add this to your book data
+            datePublished: 'Unknown', // Add this to your book data
+            cityPublished: 'Unknown', // Add this to your book data
+            pages: 'Unknown', // Add this to your book data
           ),
         ),
+      );
+    },
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
-    );
-  }
+      elevation: 4,
+      child: Container(
+        width: 200,
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                imagePath,
+                width: 200,
+                height: 150,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              author,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
 
   Widget _buildBottomNavBar(bool isDarkTheme) {
     return BottomNavigationBar(

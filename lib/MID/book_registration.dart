@@ -16,19 +16,6 @@ class SQLHelper {
     """);
   }
 
-  // Method to search books by name or author
-  static Future<List<Map<String, dynamic>>> searchData(String query) async {
-    final db = await SQLHelper.db();
-    
-    // Query to search by bookName or authorName
-    return db.query(
-      'book',
-      where: 'bookName LIKE ? OR authorName LIKE ?',
-      whereArgs: ['%$query%', '%$query%'],
-      orderBy: 'bookName', // Optional: sort by book name
-    );
-  }
-
   // Method to initialize and open the database
   static Future<sql.Database> db() async {
     // Define the path to the database file
@@ -45,7 +32,7 @@ class SQLHelper {
   }
 
   // Method to insert data into the book table
-  static Future<int> createData(String bookName, String? authorName, int pageNumber, String? datePublished, String? cityPublish) async {
+  static Future<int> createData(String bookName, String? authorName, int pageNumber, String? datePublished, String? cityPublish, String? s) async {
     final db = await SQLHelper.db();
 
     final data = {
