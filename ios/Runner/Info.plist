@@ -49,5 +49,7 @@
 	<string>This app needs access to your photo library to upload book covers.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to your camera to take photos of book covers.</string>
+	<key>NSContactsUsageDescription</key>
+    <string>We need access to your contacts to enhance your experience.</string>
 </dict>
 </plist>

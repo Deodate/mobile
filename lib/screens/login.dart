@@ -115,7 +115,7 @@ class _LoginState extends State<Login> {
                             color: isDarkTheme ? Colors.white : Colors.black,
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         _buildLabeledTextField('Email Address', 'Enter your email address', icon: Icons.person, focusNode: _studentIdFocusNode, isDarkTheme: isDarkTheme),
                         SizedBox(height: 20),
                         _buildLabeledTextField('Password', 'Enter your password', isPassword: true, icon: Icons.lock, focusNode: _passwordFocusNode, isDarkTheme: isDarkTheme),
@@ -142,7 +142,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
                         MouseRegion(
                           onEnter: (_) {
                             setState(() {
@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 238),
+                        const SizedBox(height: 238),
                       ],
                     ),
                   ),

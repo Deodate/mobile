@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_quiz/theme_notifier.dart';
 
-
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -38,14 +37,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final isDarkTheme = themeNotifier.isDarkTheme;
 
     return Scaffold(
-     appBar: AppBar(
+      appBar: AppBar(
         leading: _isDrawerOpen
             ? IconButton(
-                icon: Icon(Icons.close, size: 20),
+                icon: const Icon(Icons.close, size: 20),
                 onPressed: _closeDrawer,
               )
             : IconButton(
-                icon: Icon(Icons.menu, size: 20),
+                icon: const Icon(Icons.menu, size: 20),
                 onPressed: _toggleDrawer,
               ),
         title: Row(
@@ -100,7 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             style: TextStyle(
                               color: isDarkTheme
                                   ? Colors.white
-                                  : Color.fromARGB(255, 223, 172, 4),
+                                  : const Color.fromARGB(255, 223, 172, 4),
                               fontSize: 38,
                               fontFamily: 'Times New Roman',
                             ),
@@ -166,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           child: Text(
                             _isEnglish ? 'Primary' : 'Primaire',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
                               fontFamily: 'Times New Roman',
@@ -212,12 +211,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             _buildListTile(
                               icon: Icons.amp_stories_rounded,
-                              text: _isEnglish ? 'Mind - Exam' : 'Esprit - Examen',
+                              text: _isEnglish
+                                  ? 'Mind - Exam'
+                                  : 'Esprit - Examen',
                               fontSize: 20,
                               textColor: Colors.white,
                               iconColor: Colors.blue,
                               onTap: () {
                                 Navigator.pushNamed(context, '/exam');
+                                _closeDrawer();
+                              },
+                            ),
+                          
+                            _buildListTile(
+                              icon:
+                                  Icons.contacts, // Use a contact-related icon
+                              text: _isEnglish
+                                  ? 'Contacts'
+                                  : 'Contacts', // Correct text
+                              fontSize: 20,
+                              textColor: Colors.white,
+                              iconColor: Colors.blue,
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, '/contact'); // Correct route
                                 _closeDrawer();
                               },
                             ),
@@ -260,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             width: MediaQuery.of(context).size.width *
                                 0.12, // Adjust width for centering
                           ),
-                           Column(
+                          Column(
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.article_outlined,
@@ -306,6 +323,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                               ),
                               Text(_isEnglish ? 'Signup' : "S'inscrire"),
+                            ],
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width *
+                                0.20, // Adjust width for centering
+                          ),
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.how_to_reg,
+                                    color: Color.fromARGB(255, 46, 237, 84),
+                                    size: 30),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/contact');
+                                },
+                              ),
+                              Text(_isEnglish ? 'Contac' : "Conta"),
                             ],
                           ),
                           SizedBox(

@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                 color: themeNotifier.isDarkTheme
                     ? Colors.grey[800]
                     : Colors.blue,
-                borderRadius: BorderRadius.vertical(
+                borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(30),
                 ),
               ),
