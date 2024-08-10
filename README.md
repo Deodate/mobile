@@ -4,7 +4,7 @@ Deadline 25 July 2024
 # Mobile  #flutter  #Calculator #MIDTERM
 This is claass assignment 1, 2, 3 #Mobile Application.
 
-[1] UI / UX  #Completed
+[1] UI / UX  #Complete
 
 ![image](https://github.com/Deodate/mobile/assets/13644752/1de95f6b-f553-4720-a0b0-e612d54e0b9d)
 
